@@ -1,0 +1,74 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style1.css" />
+<title>vim_latex_suite</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div id="wrapper">
+<h1 id="toc_1">VIM LaTex Suite 使用技巧记录</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">VIM LaTex Suite 使用技巧记录</a></li>
+<ul>
+<li><a href="#toc_1.1">VIM加载空tex文件时默认加载LaTeX Suite</a></li>
+<li><a href="#toc_1.2">LaTeX &lt;F5&gt;键环境补全</a></li>
+<li><a href="#toc_1.3">LaTeX &lt;F7&gt;键命令补全</a></li>
+<li><a href="#toc_1.4">GVIM 正向反向搜索</a></li>
+<ul>
+<li><a href="#toc_1.4.1">正向搜索</a></li>
+<li><a href="#toc_1.4.2">反向搜索</a></li>
+</ul>
+</ul>
+</ul>
+</div>
+
+<pre>
+A:  liyiqiang(lyq105@163.com)
+P:  记录LaTeX Suite使用过程中技巧
+C:  2010-12-23 18:32:39
+M:  2010-12-23 18:33:40
+</pre>
+
+<h2 id="toc_1.1">VIM加载空tex文件时默认加载LaTeX Suite</h2>
+<p>
+VIM打开空tex文件时默认是打开plaintex文件，不能加载LaTeXsuite插件，因此需要设置下列变量。
+</p>
+<pre>
+let g:tex_flavor='latex'
+</pre>
+<h2 id="toc_1.2">LaTeX &lt;F5&gt;键环境补全</h2>
+<pre>
+document 
+--&gt; 
+\documentclass[&lt;+options+&gt;]{&lt;+class+&gt;}					
+\usepackage{ctex}
+
+\begin{document}
+&lt;++&gt;
+\end{document}
+</pre>
+<h2 id="toc_1.3">LaTeX &lt;F7&gt;键命令补全</h2>
+<pre>
+frac becomes \frac{&lt;++&gt;}{&lt;++&gt;}&lt;++&gt;
+word --&gt; \word{&lt;++&gt;}&lt;++&gt;
+</pre>
+<h2 id="toc_1.4">GVIM 正向反向搜索</h2>
+<h3 id="toc_1.4.1">正向搜索</h3>
+<p>
+设置变量
+</p>
+<pre>
+let g:Tex_CompileRule_dvi = 'latex -src-specials -interaction=nonstopmode $*'
+</pre>
+<p>
+使用 "\ls" 进行搜索.
+<h3 id="toc_1.4.2">反向搜索</h3>
+设置yap:View &gt; Options &gt; Inverse Search
+</p>
+<pre>
+"C:\Program Files\vim\vim61\gvim" -c ":RemoteOpen +%l %f"
+</pre>
+</div>
+</body>
+</html>

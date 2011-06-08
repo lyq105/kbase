@@ -1,0 +1,920 @@
+=colinux 配置=
+%toc
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  记录colinux配置的过程
+C:  2010-12-29 17:38:54
+M:  2010-12-29 17:38:54
+}}}
+
+1. 基本安装配置
+
+1.1 基本下载安装
+ok，开始：
+先去http://www.colinux.org/下载最新的windwos发行版binary包
+coLinux-0.7.6.exe
+以及在http://sourceforge.net/projects/colinux/files/中AllFiles里找到
+Images 2.6.x Ubuntu》 Ubuntu 9.04》Ubuntu-9.04-1gb.7z 下载之，
+colinux的guest机的磁盘rootfs系统就是这个文件，不过显然9.04以及1GB的磁盘空间是无法满足我的需求的，我们先把这个系统挂载上，后面再做磁盘扩展的工作。
+安装coLinux-0.7.6.exe前需要先装wincap，去下个WinPcap_4_1_1.exe安装之。
+安装的时候记得勾掉Root Filesystem image Download，安装包指定的发行版我们用不着下载，所以这里去掉勾选。
+我现在假设coLinux安装在d:\opt\coLinux下。
+顺便去下载个Xming（windows下免费的XServer)网址：
+http://sourceforge.net/projects/xming/files/
+下载安装：
+Xming》 6.9.0.31》Xming-6-9-0-31-setup.exe
+假设安装在d:\opt\Xming
+如果像阿熊一样懒的话直接下载Xming-fonts》7.5.0.11》Xming-fonts-7-5-0-11-setup.exe
+这样在win下理论上就不用自己去做fonts-cache了。
+最后还有个Xming-mesa，是基于OpenGL编译的Xming感觉没什么必要。
+
+1.2 基本配置
+
+安装完上面的基本环境后colinux默认会添加一个tap设备，
+我们先把自己的主网络连接（通常名为“本地连接”）改名为local
+然后把这个colinux新添加的tap设备改名为tap-colinux
+
+上面事情都做好了我们来建一个colinux的配置文件，以下为我的配置清单，大家也可以根据自己本地colinux默认自带的example.conf配置对照修改。
+1. 基本安装配置
+
+1.1 基本下载安装
+ok，开始：
+先去http://www.colinux.org/下载最新的windwos发行版binary包
+coLinux-0.7.6.exe
+以及在http://sourceforge.net/projects/colinux/files/中AllFiles里找到
+Images 2.6.x Ubuntu》 Ubuntu 9.04》Ubuntu-9.04-1gb.7z 下载之，
+colinux的guest机的磁盘rootfs系统就是这个文件，不过显然9.04以及1GB的磁盘空间是无法满足我的需求的，我们先把这个系统挂载上，后面再做磁盘扩展的工作。
+安装coLinux-0.7.6.exe前需要先装wincap，去下个WinPcap_4_1_1.exe安装之。
+安装的时候记得勾掉Root Filesystem image Download，安装包指定的发行版我们用不着下载，所以这里去掉勾选。
+我现在假设coLinux安装在d:\opt\coLinux下。
+顺便去下载个Xming（windows下免费的XServer)网址：
+http://sourceforge.net/projects/xming/files/
+下载安装：
+Xming》 6.9.0.31》Xming-6-9-0-31-setup.exe
+假设安装在d:\opt\Xming
+如果像阿熊一样懒的话直接下载Xming-fonts》7.5.0.11》Xming-fonts-7-5-0-11-setup.exe
+这样在win下理论上就不用自己去做fonts-cache了。
+最后还有个Xming-mesa，是基于OpenGL编译的Xming感觉没什么必要。
+
+1.2 基本配置
+
+安装完上面的基本环境后colinux默认会添加一个tap设备，
+我们先把自己的主网络连接（通常名为“本地连接”）改名为local
+然后把这个colinux新添加的tap设备改名为tap-colinux
+
+上面事情都做好了我们来建一个colinux的配置文件，以下为我的配置清单，大家也可以根据自己本地colinux默认自带的example.conf配置对照修改。
+view sourceprint?
+01.#
+02.# This is an example for a configuration file that can
+03.# be passed to colinux-daemon in this manner:
+04.#
+05.#    colinux-daemon @example.conf
+06.#
+07.# Note that you can still prepend or append configuration and
+08.# boot parameters before and after '@', or you can use more
+09.# that one '@ to load several settings one after another.
+10.#
+11.#    colinux-daemon @example.conf @overrider.conf mem=32
+12.#
+13.# Full list of config params is listed in colinux-daemon.txt.
+14. 
+15.# The default kernel
+16.kernel=vmlinux
+17. 
+18.# File contains the root file system.
+19.# Download and extract preconfigured file from SF "Images for 2.6".
+20.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+21. 
+22.# Swap device, should be an empty file with 128..512MB.
+23.#cobd1="d:\coLinux\swap_device"
+24. 
+25.# Tell kernel the name of root device (mostly /dev/cobd0,
+26.# /dev/cobd/0 on Gentoo)
+27.# This parameter will be forward to Linux kernel.
+28.root=/dev/cobd0
+29. 
+30.# Additional kernel parameters (ro = rootfs mount read only)
+31.ro
+32. 
+33.# Initrd installs modules into the root file system.
+34.# Need only on first boot.
+35.initrd=initrd.gz
+36. 
+37.# Maximal memory for linux guest
+38.#mem=64
+39. 
+40.# Select console size, default is 80x25
+41.#cocon=120x40
+42. 
+43.# Slirp for internet connection (outgoing)
+44.# Inside running coLinux configure eth0 with this static settings:
+45.# ipaddress 10.0.2.15   broadcast  10.0.2.255   netmask 255.255.255.0
+46.# gateway   10.0.2.2    nameserver 10.0.2.3
+47.#eth0=slirp
+48.eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+49.# Tuntap as private network between guest and host on second linux device
+50.eth1=tuntap
+51. 
+52.# Setup for serial device
+53.#ttys0=COM1,"BAUD=115200 PARITY=n DATA=8 STOP=1 dtr=on rts=on"
+54. 
+55.# Run an application on colinux start (Sample Xming, a Xserver)
+56.#exec0=d:\opt\Xming\Xming.exe,":0 -clipboard -multiwindow -ac"
+
+其中
+
+cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+为我解压Ubuntu-9.04-1gb.7z后的rootfs镜像文件。
+
+网卡的配置：
+
+eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+
+slirp模式配置比较简单，最后面跟着的是guest系统和host系统间的端口映射配置，tcp/udp协议，22:22前面的端口是host在这里也就是window宿主机的端口，后面的端口是guest机器也就是linux系统的配置。注意slirp,,tcp...之间的参数留空表示不指定网卡的mac地址（colinux每次随机生成），你也可以在此手工指定，注意不要与现有物理网络适配器（网卡）的mac冲突。其他的说明可以参考 colinux-daemon.txt说明文件。以后有任何内部服务都可以通过这里配置直接映射到本机来提供服务。
+
+上面的fs文件和conf文件预备好了后就可以跑起colinux下的ubuntu9.041Gfs系统了。做个bat批处理：run_ubuntu.bat
+
+colinux-daemon.exe -t nt @my.conf
+
+基本的系统就可以跑起来了，默认的console字体在我的虚拟机里看起来不太爽，所以我这里指定了终端(-t nt)使用colinux-console-nt.exe，本地化的字体还是看起来舒服点。
+需要注意的是这个console就相当于你vmware/virtualbox的console默认情况下是无法显示中文的（没有fonts),可以在guest里安装zhcon等等，但不属于本文的内容。
+这个时候由于开了内部的端口22转发，也就是我们可以直接用putty在windows下ssh自己本地127.0.0.1的22端口登入我们的linux系统（ubuntu9.041Gfs）
+默认镜像的账户root密码root
+大家配置的时候可以参考我的前面一篇基础配置说明：
+vps配置笔记(1)基本环境设置去把基础环境设置一下。
+
+2. 系统扩容
+
+2.1 基本预备
+不过您可能很快就发现1GB的磁盘空间完全是不够我们挥霍。这时候就需要扩容
+先用fsutil来建个磁盘rootfs文件，大小可以计算：
+
+10G = 10*1024*1024*1024 = 10737418240
+
+建个10g的磁盘空间：
+
+fsutil file createnew D:\opt\coLinux\ubuntu\root.ext3.fs 10737418240
+
+swap分区也可以这样来建，不过有更简单的方法，别人做好了，我们选择下载一下即可：
+从http://gniarf.nerim.net/colinux/swap/下载适合你的配置，我觉得1024MB的不错:)。
+http://gniarf.nerim.net/colinux/swap/swap_1024Mb.bz2
+注意除了你需要修改自己对应的外部conf，内部fs也要记得在/etc/fstab中挂载上去才能生效。
+
+2.2 扩容步骤
+ok下面一步的流程就是我们需要:
+2.2.1. 先挂载刚刚新建的分区文件(root.ext3.fs)到宿主机的配置文件里
+挂载新创建的fs镜像
+修改现有的my.conf配置：
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.cobd2="d:\opt\coLinux\ubuntu\root.ext3.fs"
+
+cobd0是现有的镜像文件
+
+cobd1是我的swap.fs文件（即刚刚下载的那个1024MB的swap分区文件）,之前改过/etc/fstab加入并重启过即可：
+
+/dev/cobd1 swap swap defaults 0 0
+
+cobd2是我们刚建的空白分区
+
+2.2.2. 进入linux格式化这个分区(mkfs)
+开机后在console登陆后开始先格式化空白分区：
+
+mkfs.ext3 /dev/cobd2
+
+2.2.3. 挂载这分区
+添加挂载点位置，挂载挂载点：
+
+mkdir /fs
+mount /dev/cobd2 /fs
+df -h
+
+2.2.4. 拷贝现有所有数据到新分区挂载点
+拷贝文件：
+
+cp -ax / /fs
+
+2.2.5. 复制设备节点
+复制设备节点命令：
+
+if [ -d /dev/.udev ]; then cp -a /dev/* /fs/dev/; fi
+
+2.2.6. sync同步一下
+同步命令:
+
+sync
+
+2.2.7. df确认没有问题后卸载(umount)挂载点，linux客户机关机
+umount,关机
+
+cd /
+umount /dev/cobd2
+shutdown -h now
+
+2.2.8. 修改windows宿主机配置，替换主镜像。
+修改宿主机配置
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\root.ext3.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.#cobd2="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+2.2.9. 开机确认没有问题，完毕。
+启动确认没有问题，运行一定时间后可以删除Ubuntu-9.04.ext3.1gb.fs文件。
+
+3. 与系统交互
+在安装完基本系统后我们还只能通过普通的登陆服务器的方式与其交互，我们需要更好的使用它：
+1外部可以通过winscp直接访问内部系统了，但需要内部可以直接使用windows宿主机的文件系统
+2如果有可能，可以配置一个x环境
+
+3.1 文件系统互通
+对于第一个问题，我们可以利用colinux的cofs搞定，具体可以参考安装目录里的cofs.txt
+在这里阿熊仅做一个简单的例子：
+宿主机windows建个文件夹：D:\opt\coLinux\sharefolder
+宿主机修改my.conf添加一个cofs的配置，比如放置在cobd的配置之后
+
+cofs0="d:\opt\coLinux\sharefolder"
+
+客户机ubuntu建个路径：
+
+sudo mkdir -p /media/sharefolder
+
+客户机ubuntu修改fstab添加一行：
+
+cofs0 /media/sharefolder cofs defaults 0 0
+
+重启之后客户机就可以在/media/sharefolder中访问宿主机windows的D:\opt\coLinux\sharefolder目录了。
+那比如你也是和阿熊一样是个web开发者的话也可以直接映射windows机器的路径直接到你的ubuntu客户机路径里，这样如果你的客户机器安装了 apache之类的服务的话，就可以实现客户机提供应用服务，而源代码在windows下编辑的方式，当然你也可以直接去装个cygwin去做同样的事情 lol。这里需要注意的是cofs的权限模式目前并不完善，我貌似试了在这些目录下chmod无效，所以如果是做web开发的话，记得fstab里设置权限设定到www-data用户/组的对应配置，具体参考cofs.txt文档，阿熊的样例配置(www-data默认用户组id为33)：
+宿主机：
+
+cofs1="d:\opt\xampp\htdocs"
+
+客户机：
+
+cofs1 /var/www cofs uid=33,gid=33,dmask=0775,fmask=0775 0 0
+
+3.2 客户guest机与宿主host机网络交互
+首先纯粹的slirp模式我还没找到可以行的通的x环境的方式。
+所以还是按照添加的tap设备的方式来做事。
+
+3.2.1 宿主端tap设备配置
+之前改名过的tap设备：tap-colinux修改ip配置为静态ip地址：
+控制面板-》网络连接-》tap-colinux->右键-》（属性/常规）-》Internet协议(TCP/IP)：
+ip地址：10.0.3.17
+子网掩码：255.255.254.0
+其他留空即可
+
+修改my.conf中的网络段，添加/修改eth1的设置：
+
+eth1=tuntap,"tap-colinux"
+
+其中第二个参数是指定tap设备的名称，比如我们前面设置的tap-colinux
+注意tap-colinux是你host宿主机的设备，我们还需要配置客户guest机的设备eth1
+
+3.2.2 客户机网卡配置
+开客户机修改网卡配置：
+
+sudo vi /etc/network/interfaces
+
+添加eth1网卡的静态配置：
+view sourceprint?
+1.auto eth1
+2.iface eth1 inet static
+3.   address 10.0.3.16
+4.   network 10.0.3.0
+5.   netmask 255.255.254.0
+6.   broadcast 10.0.3.255
+
+注意我们guest客户机的网卡配置静态ip地址为10.0.3.16
+
+3.2.3 宿主机xserver(Xming)配置
+运行windows下的xserver，比如我们前面下载安装的Xming，可以使用xlaunch配置xming的启动参数。
+运行前我们可以配置一下D:\opt\Xming\X0.hosts文件，添加一行（一行一个配置）
+写入我们上面设置的guest客户机的网卡配置静态ip地址：10.0.3.16
+
+3.2.4 客户机执行命令：
+在guest机器中执行：
+
+export DISPLAY=10.0.3.17:0
+
+也可以把这语句加入到你的.bash_profile，或者.bashrc的配置中去登录后自动执行。
+
+然后就可以去安装个xterm或者xemacs之类的xWindow的程序来试试了
+
+sudo apt-get install xterm xemacs
+
+然后最后执行xterm 或者xterm &放在后台运行，注意的是x程序在这里貌似不允许root账户执行，所以还是必须建个普通user（带sudo权限也可以）来跑这些xWindow的应用。另外记得不用的时候，把状态栏里的Xming服务退出。
+
+至此基本的windows下的ubuntu环境就基本配置完毕了，如果您仅仅需要当做开发服务器来跑，只需要参考我前面的几篇vps配置文章来设置即可。
+
+4. 桌面环境
+
+另外，虽然阿熊不太建议同时跑windows加gnome的窗口管理器，但如果你需要体验ubuntu的桌面环境也可以去装对应的gnome/xfce/kde包即可，比如
+
+sudo apt-get install ubuntu-standard ubuntu-desktop
+
+注意远程通过xdmcp连接gdm的话需要修改gdm或者xfce/kde的配置文件允许xdmcp登录，比如gdm的：
+
+sudo vi /etc/gdm/gdm.conf
+
+在[xdmcp]配置段修改Enable设置为true，然后重启gdm即可。
+
+sudo /etc/init.d/gdm restart
+
+xserver(Xming的XLaunch)连接的时候选via Xdmcp，连接的地址写与宿主机tap设备同网段通讯的客户机eth1适配器的那个静态地址，我的为10.0.3.16
+
+本文参考了几篇文章，感谢原作者的辛勤写作，我这里仅做收集整理而已：
+http://www.saltycrane.com/blog/2008/04/install-colinux-and-ubuntu-gutsy-on-win/
+http://blog.pangwa.com/2009/01/08/colinux-xming-part-1/
+http://passby2005.blogspot.com/2008/12/linuxubuntu-colinux-debian-40.html
+http://yoyoliyang.blogspot.com/2009/05/colinux.html
+http://blog.itmem.com/archives/1067
+以及官方的：
+http://colinux.wikia.com/wiki/ExpandingRoot
+1. 基本安装配置
+
+1.1 基本下载安装
+ok，开始：
+先去http://www.colinux.org/下载最新的windwos发行版binary包
+coLinux-0.7.6.exe
+以及在http://sourceforge.net/projects/colinux/files/中AllFiles里找到
+Images 2.6.x Ubuntu》 Ubuntu 9.04》Ubuntu-9.04-1gb.7z 下载之，
+colinux的guest机的磁盘rootfs系统就是这个文件，不过显然9.04以及1GB的磁盘空间是无法满足我的需求的，我们先把这个系统挂载上，后面再做磁盘扩展的工作。
+安装coLinux-0.7.6.exe前需要先装wincap，去下个WinPcap_4_1_1.exe安装之。
+安装的时候记得勾掉Root Filesystem image Download，安装包指定的发行版我们用不着下载，所以这里去掉勾选。
+我现在假设coLinux安装在d:\opt\coLinux下。
+顺便去下载个Xming（windows下免费的XServer)网址：
+http://sourceforge.net/projects/xming/files/
+下载安装：
+Xming》 6.9.0.31》Xming-6-9-0-31-setup.exe
+假设安装在d:\opt\Xming
+如果像阿熊一样懒的话直接下载Xming-fonts》7.5.0.11》Xming-fonts-7-5-0-11-setup.exe
+这样在win下理论上就不用自己去做fonts-cache了。
+最后还有个Xming-mesa，是基于OpenGL编译的Xming感觉没什么必要。
+
+1.2 基本配置
+
+安装完上面的基本环境后colinux默认会添加一个tap设备，
+我们先把自己的主网络连接（通常名为“本地连接”）改名为local
+然后把这个colinux新添加的tap设备改名为tap-colinux
+
+上面事情都做好了我们来建一个colinux的配置文件，以下为我的配置清单，大家也可以根据自己本地colinux默认自带的example.conf配置对照修改。
+view sourceprint?
+01.#
+02.# This is an example for a configuration file that can
+03.# be passed to colinux-daemon in this manner:
+04.#
+05.#    colinux-daemon @example.conf
+06.#
+07.# Note that you can still prepend or append configuration and
+08.# boot parameters before and after '@', or you can use more
+09.# that one '@ to load several settings one after another.
+10.#
+11.#    colinux-daemon @example.conf @overrider.conf mem=32
+12.#
+13.# Full list of config params is listed in colinux-daemon.txt.
+14. 
+15.# The default kernel
+16.kernel=vmlinux
+17. 
+18.# File contains the root file system.
+19.# Download and extract preconfigured file from SF "Images for 2.6".
+20.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+21. 
+22.# Swap device, should be an empty file with 128..512MB.
+23.#cobd1="d:\coLinux\swap_device"
+24. 
+25.# Tell kernel the name of root device (mostly /dev/cobd0,
+26.# /dev/cobd/0 on Gentoo)
+27.# This parameter will be forward to Linux kernel.
+28.root=/dev/cobd0
+29. 
+30.# Additional kernel parameters (ro = rootfs mount read only)
+31.ro
+32. 
+33.# Initrd installs modules into the root file system.
+34.# Need only on first boot.
+35.initrd=initrd.gz
+36. 
+37.# Maximal memory for linux guest
+38.#mem=64
+39. 
+40.# Select console size, default is 80x25
+41.#cocon=120x40
+42. 
+43.# Slirp for internet connection (outgoing)
+44.# Inside running coLinux configure eth0 with this static settings:
+45.# ipaddress 10.0.2.15   broadcast  10.0.2.255   netmask 255.255.255.0
+46.# gateway   10.0.2.2    nameserver 10.0.2.3
+47.#eth0=slirp
+48.eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+49.# Tuntap as private network between guest and host on second linux device
+50.eth1=tuntap
+51. 
+52.# Setup for serial device
+53.#ttys0=COM1,"BAUD=115200 PARITY=n DATA=8 STOP=1 dtr=on rts=on"
+54. 
+55.# Run an application on colinux start (Sample Xming, a Xserver)
+56.#exec0=d:\opt\Xming\Xming.exe,":0 -clipboard -multiwindow -ac"
+
+其中
+
+cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+为我解压Ubuntu-9.04-1gb.7z后的rootfs镜像文件。
+
+网卡的配置：
+
+eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+
+slirp模式配置比较简单，最后面跟着的是guest系统和host系统间的端口映射配置，tcp/udp协议，22:22前面的端口是host在这里也就是window宿主机的端口，后面的端口是guest机器也就是linux系统的配置。注意slirp,,tcp...之间的参数留空表示不指定网卡的mac地址（colinux每次随机生成），你也可以在此手工指定，*注意不要与现有物理网络适配器（网卡）的mac冲突*。其他的说明可以参考 colinux-daemon.txt说明文件。以后有任何内部服务都可以通过这里配置直接映射到本机来提供服务。
+
+上面的fs文件和conf文件预备好了后就可以跑起colinux下的ubuntu9.041Gfs系统了。做个bat批处理：run_ubuntu.bat
+
+colinux-daemon.exe -t nt @my.conf
+
+基本的系统就可以跑起来了，默认的console字体在我的虚拟机里看起来不太爽，所以我这里指定了终端(-t nt)使用colinux-console-nt.exe，本地化的字体还是看起来舒服点。
+需要注意的是这个console就相当于你vmware/virtualbox的console默认情况下是无法显示中文的（没有fonts),可以在guest里安装zhcon等等，但不属于本文的内容。
+这个时候由于开了内部的端口22转发，也就是我们可以直接用putty在windows下ssh自己本地127.0.0.1的22端口登入我们的linux系统（ubuntu9.041Gfs）
+默认镜像的账户root密码root
+大家配置的时候可以参考我的前面一篇基础配置说明：
+vps配置笔记(1)基本环境设置去把基础环境设置一下。
+
+2. 系统扩容
+
+2.1 基本预备
+不过您可能很快就发现1GB的磁盘空间完全是不够我们挥霍。这时候就需要扩容
+先用fsutil来建个磁盘rootfs文件，大小可以计算：
+
+10G = 10*1024*1024*1024 = 10737418240
+
+建个10g的磁盘空间：
+
+fsutil file createnew D:\opt\coLinux\ubuntu\root.ext3.fs 10737418240
+
+swap分区也可以这样来建，不过有更简单的方法，别人做好了，我们选择下载一下即可：
+从http://gniarf.nerim.net/colinux/swap/下载适合你的配置，我觉得1024MB的不错:)。
+http://gniarf.nerim.net/colinux/swap/swap_1024Mb.bz2
+注意除了你需要修改自己对应的外部conf，内部fs也要记得在/etc/fstab中挂载上去才能生效。
+
+2.2 扩容步骤
+ok下面一步的流程就是我们需要:
+2.2.1. 先挂载刚刚新建的分区文件(root.ext3.fs)到宿主机的配置文件里
+挂载新创建的fs镜像
+修改现有的my.conf配置：
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.cobd2="d:\opt\coLinux\ubuntu\root.ext3.fs"
+
+cobd0是现有的镜像文件
+
+cobd1是我的swap.fs文件（即刚刚下载的那个1024MB的swap分区文件）,之前改过/etc/fstab加入并重启过即可：
+
+/dev/cobd1 swap swap defaults 0 0
+
+cobd2是我们刚建的空白分区
+
+2.2.2. 进入linux格式化这个分区(mkfs)
+开机后在console登陆后开始先格式化空白分区：
+
+mkfs.ext3 /dev/cobd2
+
+2.2.3. 挂载这分区
+添加挂载点位置，挂载挂载点：
+
+mkdir /fs
+mount /dev/cobd2 /fs
+df -h
+
+2.2.4. 拷贝现有所有数据到新分区挂载点
+拷贝文件：
+
+cp -ax / /fs
+
+2.2.5. 复制设备节点
+复制设备节点命令：
+
+if [ -d /dev/.udev ]; then cp -a /dev/* /fs/dev/; fi
+
+2.2.6. sync同步一下
+同步命令:
+
+sync
+
+2.2.7. df确认没有问题后卸载(umount)挂载点，linux客户机关机
+umount,关机
+
+cd /
+umount /dev/cobd2
+shutdown -h now
+
+2.2.8. 修改windows宿主机配置，替换主镜像。
+修改宿主机配置
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\root.ext3.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.#cobd2="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+2.2.9. 开机确认没有问题，完毕。
+启动确认没有问题，运行一定时间后可以删除Ubuntu-9.04.ext3.1gb.fs文件。
+
+3. 与系统交互
+在安装完基本系统后我们还只能通过普通的登陆服务器的方式与其交互，我们需要更好的使用它：
+1外部可以通过winscp直接访问内部系统了，但需要内部可以直接使用windows宿主机的文件系统
+2如果有可能，可以配置一个x环境
+
+3.1 文件系统互通
+对于第一个问题，我们可以利用colinux的cofs搞定，具体可以参考安装目录里的cofs.txt
+在这里阿熊仅做一个简单的例子：
+宿主机windows建个文件夹：D:\opt\coLinux\sharefolder
+宿主机修改my.conf添加一个cofs的配置，比如放置在cobd的配置之后
+
+cofs0="d:\opt\coLinux\sharefolder"
+
+客户机ubuntu建个路径：
+
+sudo mkdir -p /media/sharefolder
+
+客户机ubuntu修改fstab添加一行：
+
+cofs0 /media/sharefolder cofs defaults 0 0
+
+重启之后客户机就可以在/media/sharefolder中访问宿主机windows的D:\opt\coLinux\sharefolder目录了。
+那比如你也是和阿熊一样是个web开发者的话也可以直接映射windows机器的路径直接到你的ubuntu客户机路径里，这样如果你的客户机器安装了 apache之类的服务的话，就可以实现客户机提供应用服务，而源代码在windows下编辑的方式，当然你也可以直接去装个cygwin去做同样的事情 lol。这里需要注意的是cofs的权限模式目前并不完善，我貌似试了在这些目录下chmod无效，所以如果是做web开发的话，记得fstab里设置权限设定到www-data用户/组的对应配置，具体参考cofs.txt文档，阿熊的样例配置(www-data默认用户组id为33)：
+宿主机：
+
+cofs1="d:\opt\xampp\htdocs"
+
+客户机：
+
+cofs1 /var/www cofs uid=33,gid=33,dmask=0775,fmask=0775 0 0
+
+3.2 客户guest机与宿主host机网络交互
+首先纯粹的slirp模式我还没找到可以行的通的x环境的方式。
+所以还是按照添加的tap设备的方式来做事。
+
+3.2.1 宿主端tap设备配置
+之前改名过的tap设备：tap-colinux修改ip配置为静态ip地址：
+控制面板-》网络连接-》tap-colinux->右键-》（属性/常规）-》Internet协议(TCP/IP)：
+ip地址：10.0.3.17
+子网掩码：255.255.254.0
+其他留空即可
+
+修改my.conf中的网络段，添加/修改eth1的设置：
+
+eth1=tuntap,"tap-colinux"
+
+其中第二个参数是指定tap设备的名称，比如我们前面设置的tap-colinux
+注意tap-colinux是你host宿主机的设备，我们还需要配置客户guest机的设备eth1
+
+3.2.2 客户机网卡配置
+开客户机修改网卡配置：
+
+sudo vi /etc/network/interfaces
+
+添加eth1网卡的静态配置：
+view sourceprint?
+1.auto eth1
+2.iface eth1 inet static
+3.   address 10.0.3.16
+4.   network 10.0.3.0
+5.   netmask 255.255.254.0
+6.   broadcast 10.0.3.255
+
+注意我们guest客户机的网卡配置静态ip地址为10.0.3.16
+
+3.2.3 宿主机xserver(Xming)配置
+运行windows下的xserver，比如我们前面下载安装的Xming，可以使用xlaunch配置xming的启动参数。
+运行前我们可以配置一下D:\opt\Xming\X0.hosts文件，添加一行（一行一个配置）
+写入我们上面设置的guest客户机的网卡配置静态ip地址：10.0.3.16
+
+3.2.4 客户机执行命令：
+在guest机器中执行：
+
+export DISPLAY=10.0.3.17:0
+
+也可以把这语句加入到你的.bash_profile，或者.bashrc的配置中去登录后自动执行。
+
+然后就可以去安装个xterm或者xemacs之类的xWindow的程序来试试了
+
+sudo apt-get install xterm xemacs
+
+然后最后执行xterm 或者xterm &放在后台运行，注意的是x程序在这里貌似不允许root账户执行，所以还是必须建个普通user（带sudo权限也可以）来跑这些xWindow的应用。另外记得不用的时候，把状态栏里的Xming服务退出。
+
+至此基本的windows下的ubuntu环境就基本配置完毕了，如果您仅仅需要当做开发服务器来跑，只需要参考我前面的几篇vps配置文章来设置即可。
+
+4. 桌面环境
+
+另外，虽然阿熊不太建议同时跑windows加gnome的窗口管理器，但如果你需要体验ubuntu的桌面环境也可以去装对应的gnome/xfce/kde包即可，比如
+
+sudo apt-get install ubuntu-standard ubuntu-desktop
+
+注意远程通过xdmcp连接gdm的话需要修改gdm或者xfce/kde的配置文件允许xdmcp登录，比如gdm的：
+
+sudo vi /etc/gdm/gdm.conf
+
+在[xdmcp]配置段修改Enable设置为true，然后重启gdm即可。
+
+sudo /etc/init.d/gdm restart
+
+xserver(Xming的XLaunch)连接的时候选via Xdmcp，连接的地址写与宿主机tap设备同网段通讯的客户机eth1适配器的那个静态地址，我的为10.0.3.16
+
+本文参考了几篇文章，感谢原作者的辛勤写作，我这里仅做收集整理而已：
+http://www.saltycrane.com/blog/2008/04/install-colinux-and-ubuntu-gutsy-on-win/
+http://blog.pangwa.com/2009/01/08/colinux-xming-part-1/
+http://passby2005.blogspot.com/2008/12/linuxubuntu-colinux-debian-40.html
+http://yoyoliyang.blogspot.com/2009/05/colinux.html
+http://blog.itmem.com/archives/1067
+以及官方的：
+http://colinux.wikia.com/wiki/ExpandingRoot
+
+01.#
+02.# This is an example for a configuration file that can
+03.# be passed to colinux-daemon in this manner:
+04.#
+05.#    colinux-daemon @example.conf
+06.#
+07.# Note that you can still prepend or append configuration and
+08.# boot parameters before and after '@', or you can use more
+09.# that one '@ to load several settings one after another.
+10.#
+11.#    colinux-daemon @example.conf @overrider.conf mem=32
+12.#
+13.# Full list of config params is listed in colinux-daemon.txt.
+14. 
+15.# The default kernel
+16.kernel=vmlinux
+17. 
+18.# File contains the root file system.
+19.# Download and extract preconfigured file from SF "Images for 2.6".
+20.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+21. 
+22.# Swap device, should be an empty file with 128..512MB.
+23.#cobd1="d:\coLinux\swap_device"
+24. 
+25.# Tell kernel the name of root device (mostly /dev/cobd0,
+26.# /dev/cobd/0 on Gentoo)
+27.# This parameter will be forward to Linux kernel.
+28.root=/dev/cobd0
+29. 
+30.# Additional kernel parameters (ro = rootfs mount read only)
+31.ro
+32. 
+33.# Initrd installs modules into the root file system.
+34.# Need only on first boot.
+35.initrd=initrd.gz
+36. 
+37.# Maximal memory for linux guest
+38.#mem=64
+39. 
+40.# Select console size, default is 80x25
+41.#cocon=120x40
+42. 
+43.# Slirp for internet connection (outgoing)
+44.# Inside running coLinux configure eth0 with this static settings:
+45.# ipaddress 10.0.2.15   broadcast  10.0.2.255   netmask 255.255.255.0
+46.# gateway   10.0.2.2    nameserver 10.0.2.3
+47.#eth0=slirp
+48.eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+49.# Tuntap as private network between guest and host on second linux device
+50.eth1=tuntap
+51. 
+52.# Setup for serial device
+53.#ttys0=COM1,"BAUD=115200 PARITY=n DATA=8 STOP=1 dtr=on rts=on"
+54. 
+55.# Run an application on colinux start (Sample Xming, a Xserver)
+56.#exec0=d:\opt\Xming\Xming.exe,":0 -clipboard -multiwindow -ac"
+
+其中
+
+cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+为我解压Ubuntu-9.04-1gb.7z后的rootfs镜像文件。
+
+网卡的配置：
+
+eth0=slirp,,tcp:22:22/tcp:3306:3306/tcp:1984:1984/tcp:11211:11211
+
+slirp模式配置比较简单，最后面跟着的是guest系统和host系统间的端口映射配置，tcp/udp协议，22:22前面的端口是host在这里也就是window宿主机的端口，后面的端口是guest机器也就是linux系统的配置。注意slirp,,tcp...之间的参数留空表示不指定网卡的mac地址（colinux每次随机生成），你也可以在此手工指定，注意不要与现有物理网络适配器（网卡）的mac冲突。其他的说明可以参考 colinux-daemon.txt说明文件。以后有任何内部服务都可以通过这里配置直接映射到本机来提供服务。
+
+上面的fs文件和conf文件预备好了后就可以跑起colinux下的ubuntu9.041Gfs系统了。做个bat批处理：run_ubuntu.bat
+
+colinux-daemon.exe -t nt @my.conf
+
+基本的系统就可以跑起来了，默认的console字体在我的虚拟机里看起来不太爽，所以我这里指定了终端(-t nt)使用colinux-console-nt.exe，本地化的字体还是看起来舒服点。
+需要注意的是这个console就相当于你vmware/virtualbox的console默认情况下是无法显示中文的（没有fonts),可以在guest里安装zhcon等等，但不属于本文的内容。
+这个时候由于开了内部的端口22转发，也就是我们可以直接用putty在windows下ssh自己本地127.0.0.1的22端口登入我们的linux系统（ubuntu9.041Gfs）
+默认镜像的账户root密码root
+大家配置的时候可以参考我的前面一篇基础配置说明：
+vps配置笔记(1)基本环境设置去把基础环境设置一下。
+
+2. 系统扩容
+
+2.1 基本预备
+不过您可能很快就发现1GB的磁盘空间完全是不够我们挥霍。这时候就需要扩容
+先用fsutil来建个磁盘rootfs文件，大小可以计算：
+
+10G = 10*1024*1024*1024 = 10737418240
+
+建个10g的磁盘空间：
+
+fsutil file createnew D:\opt\coLinux\ubuntu\root.ext3.fs 10737418240
+
+swap分区也可以这样来建，不过有更简单的方法，别人做好了，我们选择下载一下即可：
+从http://gniarf.nerim.net/colinux/swap/下载适合你的配置，我觉得1024MB的不错:)。
+http://gniarf.nerim.net/colinux/swap/swap_1024Mb.bz2
+注意除了你需要修改自己对应的外部conf，内部fs也要记得在/etc/fstab中挂载上去才能生效。
+
+2.2 扩容步骤
+ok下面一步的流程就是我们需要:
+2.2.1. 先挂载刚刚新建的分区文件(root.ext3.fs)到宿主机的配置文件里
+挂载新创建的fs镜像
+修改现有的my.conf配置：
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.cobd2="d:\opt\coLinux\ubuntu\root.ext3.fs"
+
+cobd0是现有的镜像文件
+
+cobd1是我的swap.fs文件（即刚刚下载的那个1024MB的swap分区文件）,之前改过/etc/fstab加入并重启过即可：
+
+/dev/cobd1 swap swap defaults 0 0
+
+cobd2是我们刚建的空白分区
+
+2.2.2. 进入linux格式化这个分区(mkfs)
+开机后在console登陆后开始先格式化空白分区：
+
+mkfs.ext3 /dev/cobd2
+
+2.2.3. 挂载这分区
+添加挂载点位置，挂载挂载点：
+
+mkdir /fs
+mount /dev/cobd2 /fs
+df -h
+
+2.2.4. 拷贝现有所有数据到新分区挂载点
+拷贝文件：
+
+cp -ax / /fs
+
+2.2.5. 复制设备节点
+复制设备节点命令：
+
+if [ -d /dev/.udev ]; then cp -a /dev/* /fs/dev/; fi
+
+2.2.6. sync同步一下
+同步命令:
+
+sync
+
+2.2.7. df确认没有问题后卸载(umount)挂载点，linux客户机关机
+umount,关机
+
+cd /
+umount /dev/cobd2
+shutdown -h now
+
+2.2.8. 修改windows宿主机配置，替换主镜像。
+修改宿主机配置
+view sourceprint?
+1.cobd0="d:\opt\coLinux\ubuntu\root.ext3.fs"
+2. 
+3.# Swap device, should be an empty file with 128..512MB.
+4.cobd1="d:\opt\coLinux\swap.fs"
+5. 
+6.#cobd2="d:\opt\coLinux\ubuntu\Ubuntu-9.04.ext3.1gb.fs"
+
+2.2.9. 开机确认没有问题，完毕。
+启动确认没有问题，运行一定时间后可以删除Ubuntu-9.04.ext3.1gb.fs文件。
+
+3. 与系统交互
+在安装完基本系统后我们还只能通过普通的登陆服务器的方式与其交互，我们需要更好的使用它：
+1外部可以通过winscp直接访问内部系统了，但需要内部可以直接使用windows宿主机的文件系统
+2如果有可能，可以配置一个x环境
+
+3.1 文件系统互通
+对于第一个问题，我们可以利用colinux的cofs搞定，具体可以参考安装目录里的cofs.txt
+在这里阿熊仅做一个简单的例子：
+宿主机windows建个文件夹：D:\opt\coLinux\sharefolder
+宿主机修改my.conf添加一个cofs的配置，比如放置在cobd的配置之后
+
+cofs0="d:\opt\coLinux\sharefolder"
+
+客户机ubuntu建个路径：
+
+sudo mkdir -p /media/sharefolder
+
+客户机ubuntu修改fstab添加一行：
+
+cofs0 /media/sharefolder cofs defaults 0 0
+
+重启之后客户机就可以在/media/sharefolder中访问宿主机windows的D:\opt\coLinux\sharefolder目录了。
+那比如你也是和阿熊一样是个web开发者的话也可以直接映射windows机器的路径直接到你的ubuntu客户机路径里，这样如果你的客户机器安装了 apache之类的服务的话，就可以实现客户机提供应用服务，而源代码在windows下编辑的方式，当然你也可以直接去装个cygwin去做同样的事情 lol。这里需要注意的是cofs的权限模式目前并不完善，我貌似试了在这些目录下chmod无效，所以如果是做web开发的话，记得fstab里设置权限设定到www-data用户/组的对应配置，具体参考cofs.txt文档，阿熊的样例配置(www-data默认用户组id为33)：
+宿主机：
+
+cofs1="d:\opt\xampp\htdocs"
+
+客户机：
+
+cofs1 /var/www cofs uid=33,gid=33,dmask=0775,fmask=0775 0 0
+
+3.2 客户guest机与宿主host机网络交互
+首先纯粹的slirp模式我还没找到可以行的通的x环境的方式。
+所以还是按照添加的tap设备的方式来做事。
+
+3.2.1 宿主端tap设备配置
+之前改名过的tap设备：tap-colinux修改ip配置为静态ip地址：
+控制面板-》网络连接-》tap-colinux->右键-》（属性/常规）-》Internet协议(TCP/IP)：
+ip地址：10.0.3.17
+子网掩码：255.255.254.0
+其他留空即可
+
+修改my.conf中的网络段，添加/修改eth1的设置：
+
+eth1=tuntap,"tap-colinux"
+
+其中第二个参数是指定tap设备的名称，比如我们前面设置的tap-colinux
+注意tap-colinux是你host宿主机的设备，我们还需要配置客户guest机的设备eth1
+
+3.2.2 客户机网卡配置
+开客户机修改网卡配置：
+
+sudo vi /etc/network/interfaces
+
+添加eth1网卡的静态配置：
+view sourceprint?
+1.auto eth1
+2.iface eth1 inet static
+3.   address 10.0.3.16
+4.   network 10.0.3.0
+5.   netmask 255.255.254.0
+6.   broadcast 10.0.3.255
+
+注意我们guest客户机的网卡配置静态ip地址为10.0.3.16
+
+3.2.3 宿主机xserver(Xming)配置
+运行windows下的xserver，比如我们前面下载安装的Xming，可以使用xlaunch配置xming的启动参数。
+运行前我们可以配置一下D:\opt\Xming\X0.hosts文件，添加一行（一行一个配置）
+写入我们上面设置的guest客户机的网卡配置静态ip地址：10.0.3.16
+
+3.2.4 客户机执行命令：
+在guest机器中执行：
+
+export DISPLAY=10.0.3.17:0
+
+也可以把这语句加入到你的.bash_profile，或者.bashrc的配置中去登录后自动执行。
+
+然后就可以去安装个xterm或者xemacs之类的xWindow的程序来试试了
+
+sudo apt-get install xterm xemacs
+
+然后最后执行xterm 或者xterm &放在后台运行，注意的是x程序在这里貌似不允许root账户执行，所以还是必须建个普通user（带sudo权限也可以）来跑这些xWindow的应用。另外记得不用的时候，把状态栏里的Xming服务退出。
+
+至此基本的windows下的ubuntu环境就基本配置完毕了，如果您仅仅需要当做开发服务器来跑，只需要参考我前面的几篇vps配置文章来设置即可。
+
+4. 桌面环境
+
+另外，虽然阿熊不太建议同时跑windows加gnome的窗口管理器，但如果你需要体验ubuntu的桌面环境也可以去装对应的gnome/xfce/kde包即可，比如
+
+sudo apt-get install ubuntu-standard ubuntu-desktop
+
+注意远程通过xdmcp连接gdm的话需要修改gdm或者xfce/kde的配置文件允许xdmcp登录，比如gdm的：
+
+sudo vi /etc/gdm/gdm.conf
+
+在[xdmcp]配置段修改Enable设置为true，然后重启gdm即可。
+
+sudo /etc/init.d/gdm restart
+
+xserver(Xming的XLaunch)连接的时候选via Xdmcp，连接的地址写与宿主机tap设备同网段通讯的客户机eth1适配器的那个静态地址，我的为10.0.3.16
+
+本文参考了几篇文章，感谢原作者的辛勤写作，我这里仅做收集整理而已：
+
+http://www.saltycrane.com/blog/2008/04/install-colinux-and-ubuntu-gutsy-on-win/
+http://blog.pangwa.com/2009/01/08/colinux-xming-part-1/
+http://passby2005.blogspot.com/2008/12/linuxubuntu-colinux-debian-40.html
+http://yoyoliyang.blogspot.com/2009/05/colinux.html
+http://blog.itmem.com/archives/1067
+以及官方的：
+http://colinux.wikia.com/wiki/ExpandingRoot
+

@@ -1,0 +1,10 @@
+=同伦延拓法=
+
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  Homotopy method to solve nonlinear system
+C:  2010-12-28 14:33:58
+M:  2010-12-28 14:33:58
+}}}
+
+

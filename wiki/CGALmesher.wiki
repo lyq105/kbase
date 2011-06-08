@@ -1,0 +1,191 @@
+=CGAL网格生成=
+%toc
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  记录如何CGAL生成一个可用的网格
+C:  2010-12-31 14:38:26
+M:  2010-12-31 14:38:26
+}}}
+
+
+==基本概念==
+
+* 网格生成中基本元素的英文表示
+	* Vertex： 网格节点；
+	* Cell:    三维三角网格中的单元；
+	* face:    二维三角网格中的单元；
+	* facet：  三维三角网格中的单元的面；
+	* edge:    网格的边；
+* Delaunay Trangulation : 
+	*	A triangulation is a Delaunay triangulation if the circumscribing circle of any facet of the triangulation contains	no vertex in its interior.
+* Constrained Delaunay Trangulation : 
+	* The circumscribing circle of any facet of a constrained Delaunay triangulation contains in its interior no data point visible from the facet.
+* Delaunay edge:
+	* An edge is said to be a Delaunay edge if it is inscribed in an empty circle (containing no data point in its interior).
+* Gabriel edge:
+	* This edge is said to be _Gabriel edge_ if its diametrical circle is empty.
+* Corforming Delaunay triangulation:
+	* A constrained Delaunay triangulation is said to be a conforming Delaunay triangulation if every constrained edge is a Delaunay edge.
+* Conforming Gabriel Triangulation
+	* A constrained Delaunay triangulation is said to be a _conforming Gabriel triangulation_ if every constrained edge is a _Gabriel edge_. The Gabriel property is stronger than the Delaunay property and each Gabriel edge is a Delaunay edge. Conforming Gabriel triangulations are thus also conforming Delaunay triangulations.
+* Mesh
+	* A mesh is a partition of a given region into simplices whose shapes and sizes satisfy several criteria.
+* Mesh domain(PSLG)
+	* The mesh domain is the region that user wants to mesh, it has to be bounded region of the palne. The domain is defined by a _planar straight line graph_, PALG for short.
+	* CGAL use *seeds* to mark domain which will be meshed and which will not be meshed.
+
+==生成网格的思路==
+===二维网格===
+网格生成的思路很简单，无非就是插入点，插入边约束，用seeds标记洞，生成网格。
+  
+
+==生成网格的示例代码==
+
+先来两个算例：
+* 算例一：[[images/mesh.jpg]]	
+* 算例二：[[images/mesh_with_hole.jpg]]
+
+===典型的代码===
+==== 代码一====
+[[files/CGAL_Sample_code.html|这里]]者下面
+{{{
+
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Constrained_Delaunay_triangulation_2.h>
+#include <CGAL/Delaunay_mesher_2.h>
+#include <CGAL/Delaunay_mesh_face_base_2.h>
+#include <CGAL/Delaunay_mesh_size_criteria_2.h>
+#include <iostream>
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
+typedef CGAL::Triangulation_vertex_base_2<K> Vb;
+typedef CGAL::Delaunay_mesh_face_base_2<K> Fb;
+typedef CGAL::Triangulation_data_structure_2<Vb, Fb> Tds;
+typedef CGAL::Constrained_Delaunay_triangulation_2<K, Tds> CDT;
+typedef CGAL::Delaunay_mesh_size_criteria_2<CDT> Criteria;
+typedef CDT::Vertex_handle Vertex_handle;
+typedef CDT::Point Point;
+
+template<typename T>
+void
+output(T cdt,char* filename)
+{
+	std::ofstream fout(filename);
+
+	// 	std::cout<<cdt.number_of_vertices()<<" "
+	// 		<<cdt.number_of_faces()
+	// 		<<std::endl
+	// 		<<std::endl;
+
+	T::Finite_vertices_iterator fvi(cdt.finite_vertices_begin());
+	T::Finite_faces_iterator ffi(cdt.finite_faces_begin());
+	std::map<Vertex_handle,int> V;
+	int mesh_faces_counter = 0;
+	for(CDT::Finite_faces_iterator fit = cdt.finite_faces_begin();
+		fit != cdt.finite_faces_end(); ++fit)
+	{
+		if(fit->is_in_domain()) ++mesh_faces_counter;
+	}
+
+	fout<<"ZONE"
+		<<" NODES="<<cdt.number_of_vertices()
+		<<", ELEMENTS="<<mesh_faces_counter
+		<<", DATAPACKING=POINT, ZONETYPE=FETRIANGLE\n";
+
+	int nnum=1;
+	for (fvi=cdt.finite_vertices_begin();fvi!=cdt.finite_vertices_end();fvi++)
+	{	
+		V[fvi]=nnum++;
+		// 		std::cout<<*fvi<<std::endl;
+		fout<<*fvi<<std::endl;
+
+	}
+	for(ffi=cdt.finite_faces_begin();ffi!=cdt.finite_faces_end();ffi++)
+	{			
+		if(ffi->is_in_domain())
+		{
+			for(int j = 0; j < 3 ; ++j) 
+			{
+				// 			std::cout<< V[ffi->vertex(j)]<<" ";
+				fout<< V[ffi->vertex(j)]<<" ";
+			}
+		}
+		// 		std::cout << std::endl;
+		fout << std::endl;
+	}
+	fout.close();
+}
+
+int main()
+{
+	CDT cdt;
+	Vertex_handle va = cdt.insert(Point(2,0));
+	Vertex_handle vb = cdt.insert(Point(0,2));
+	Vertex_handle vc = cdt.insert(Point(-2,0));
+	Vertex_handle vd = cdt.insert(Point(0,-2));
+	cdt.insert_constraint(va, vb);
+	cdt.insert_constraint(vb, vc);
+	cdt.insert_constraint(vc, vd);
+	cdt.insert_constraint(vd, va);
+	va = cdt.insert(Point(3,3));
+	vb = cdt.insert(Point(-3,3));
+	vc = cdt.insert(Point(-3,-3));
+	vd = cdt.insert(Point(3,-3));
+	cdt.insert_constraint(va, vb);
+	cdt.insert_constraint(vb, vc);
+	cdt.insert_constraint(vc, vd);
+	cdt.insert_constraint(vd, va);
+	std::list<Point> list_of_seeds;
+	list_of_seeds.push_back(Point(0, 0));
+
+	std::cout << "Number of vertices: " << cdt.number_of_vertices() <<
+		std::endl;
+	std::cout << "Meshing the domain..." << std::endl;
+	CGAL::refine_Delaunay_mesh_2(cdt, list_of_seeds.begin(),
+		list_of_seeds.end(),
+		Criteria(0.125,0.5));
+	std::cout << "Number of vertices: " << cdt.number_of_vertices() <<
+		std::endl;
+	std::cout << "Number of finite faces: " << cdt.number_of_faces() <<
+		std::endl;
+	int mesh_faces_counter = 0;
+	for(CDT::Finite_faces_iterator fit = cdt.finite_faces_begin();
+		fit != cdt.finite_faces_end(); ++fit)
+	{
+		if(fit->is_in_domain()) ++mesh_faces_counter;
+	}
+	std::cout << "Number of faces in the mesh domain: " <<
+		mesh_faces_counter << std::endl;
+	output(cdt,"f:\\123.plt");
+}
+
+
+}}}
+
+==== 代码二 ====
+一个控制网格生成的代码片段
+{{{
+
+Mesher mesher(cdt);
+  if(n_seeds)
+    {
+      mesher.set_seeds(seeds.begin(),seeds.end());
+      std::cout<<n_seeds<<std::endl;
+    }
+
+  mesher.set_criteria(Criteria(0.125, 0.5));
+  mesher.refine_mesh();
+
+}}}
+
+==== 代码三====
+读入点坐标的代码片段
+
+{{{
+
+	std::ifstream in("f:\\mynode.n");
+  std::istream_iterator<Point> begin(in);
+  std::istream_iterator<Point> end;
+  
+	Delaunay t;
+  t.insert(begin, end);
+}}}

@@ -1,0 +1,17 @@
+== Multiscale finite element method ==
+
+=== Main propurse ===
+This methods discussed in this book attempt to <b>capture the multiscale 
+structure of the solution via localized basis functions</b>. 
+
+these basis functions contain essential multiscale information to provide a
+faithful approximation of the solution.
+
+=== Two types of multiscale processes: === 
+* The first type is the process which has scale separation.
+	* In this case, the small-scale information is captured via local multiscale basis functions computed based only on the information within local regions (coarse-scale grid blocks).
+* The second type of multiscale processes do not have apparent scale separation.  
+
+MsFEMs consist of two major ingredients: multiscale basis functions and
+a global numerical formulation that couples these multiscale basis functions.
+

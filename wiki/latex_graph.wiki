@@ -1,0 +1,98 @@
+=Latex 中的作图=
+%toc
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  latex系列软件中作图方法的笔记
+C:  2011-01-03 14:49:20
+M:  2011-01-03 14:49:20
+}}}
+==在LaTeX文档中插入图片==
+===在LaTeX文档中插入图片的几种常用的方法===
+LaTeX中一般只直接支持插入eps(Encapsulated PostScript)格式的图形文件, 因此在图片插入latex文档之前应先设法得到图片的eps格式的文件. 可参考本页的 "如何得到ps(eps)格式的文件"一节的内容准备好欲插入图片的 eps文件.
+在LaTeX文档中插入图片都是通过使用一些latex图形处理宏命令来实现的, 有很多宏命令都支持在在LaTeX文档中插入eps格式的图形文件, 主要有:
+====用includegraphics宏命令(graphicx包)====
+	首先需在latex文档的文件说明部分加上:
+{{{
+\usepackage{graphicx}
+}}}               
+然后在需要插入图片的地方引用:
+{{{
+\includegraphics[height=高度]{图片文件名}
+或者:  \includegraphics[width=宽度]{图片文件名}
+}}}               
+其中的"高度"和"宽度"是指希望图片打印的高度和宽度, 必须给出单位, 可用厘米(cm)或英寸(in). 高度和宽度也可用上述格式同时给出, 这样可以改变原图的长宽比例. 上述命令中的图片文件名是指欲插入的图片文件 的文件名, 图片必需是eps格式的.
+用graphicx包的includegraphics宏命令插入图片时还可以使图片旋转, 方法是:
+{{{
+\includegraphics[height=高度][angle=旋转角度]{图片文件名}
+}}}               
+====用includegraphics宏命令(graphics包)====
+用graphics包插入图片过程较麻烦, 具体的方法可参见 "Graphics and Colour with LaTeX"一文中的介绍.
+
+====用psfig宏命令====
+首先需在latex文档的文件说明部分加上:
+{{{
+\usepackage{psfig}                  
+}}}
+然后在需要插入图片的地方引用:
+{{{
+\psfig{figure=图片文件名,height=高度}
+或者:  \psfig{figure=图片文件名,width=宽度} 
+}}}                  
+
+其中的"高度"和"宽度"是指希望图片打印的高度和宽度, 必须给出单位, 可用厘米(cm)或英寸(in). 高度和宽度也可用上述格式同时给出, 这样可以改变原图的长宽比例. 上述命令中的图片文件名是指欲插入的图片文件 的文件名, 图片必需是eps格式的.
+
+====用epsfig宏命令====
+
+epsfig宏命令的使用方法和psfig完全相同, 具体方法是: 首先需在latex文档的文件说明部分加上:
+{{{
+\usepackage{epsfig}
+}}}               
+然后在需要插入图片的地方引用:
+{{{
+\epsfig{figure=图片文件名,height=高度}
+或者:  \epsfig{figure=图片文件名,width=宽度}
+}}}                  
+
+其中的"高度"和"宽度"是指希望图片打印的高度和宽度, 必须给出单位, 可用厘米(cm)或英寸(in). 高度和宽度也可用上述格式同时给出, 这样可以改变原图的长宽比例. 上述命令中的图片文件名是指欲插入的图片文件 的文件名, 图片必需是eps格式的.
+
+====用epsf宏命令====
+用epsf宏命令的使用方法是: 首先需在latex文档的文件说明部分加上:
+{{{
+\usepackage{epsf}
+}}}                  
+然后在需要插入图片的地方引用:
+{{{
+\epsfxsize=宽度\epsffile{图片文件名}
+或者:  \epsfysize=高度\epsffile{图片文件名}
+}}}                  
+其中的"高度"和"宽度"是指希望图片打印的高度和宽度, 必须给出单位, 可用厘米(cm)或英寸(in). 高度和宽度也可用上述格式同时给出, 这样可以改变原图的长宽比例. 上述命令中的图片文件名是指欲插入的图片文件 的文件名, 图片必需是eps格式的.
+
+===如何得到PostScript(.ps或.eps)格式的文件===
+
+LaTeX中一般只直接支持插入eps(Encapsulated PostScript)格式的图形文件, 因此在图片插入latex文档之前应先设法得到图片的eps格式的文件.
+
+    * UNIX下的各种应用软件都可以把其结果输出为ps格式, 大部分软件也可以 输出eps格式.
+    * 若软件只能输出ps格式而不能输出eps格式的结果, 则可用ps2epsi命令将其转化为eps格式, 可参考man ps2epsi的说明.
+    * 若图片文件的格式是位图图形文件则可用Image Magick软件包的display 和convert工具转化为ps或eps格式的文件. 详见其man页和 使用说明
+    * Windows软件的输出结果变成ps/eps文件: 可参见本网站 "高能物理研究室Windows系统使用技巧"中的 "如何把Windows系统中软件的输出结果转化为ps和eps格式的文件" 一栏中的说明.
+===关于LaTex中的图表问题的几篇有用的文章===
+1. Graphics and Colour with LaTeX
+有关在LaTex中插图和使用颜色的在线指导.
+
+2. Figure'ing and Picture'ing LaTeX(ps格式)
+在LaTex中插入ps图和xfig图的方法.
+
+3. Using Imported Graphics in LaTeX2e(ps格式)
+关于LaTex中插图的详细论述, 包括基本概念, 文件格式及其相互转换, 有关软件等. 其中还有如何把ps格式图片中的字符替换成latex格式字符, 以解决有些应用软件无法使用希腊字母等特殊字符及复杂数学公式 表达式的问题.
+4. LaTeX maths and graphics(ps格式)
+主要是关于在LaTex中插入图片和公式的方法.
+
+==Asymptote作图==
+
+===Asymptote作图简介===
+# Asymptote中的循环使用的是++i，而不是i++;
+# 基本的作图操作是计算参数，描点，画线，填充面，增加光源，材质等。
+# 作图的过程可以划分为一些子过程，比如说画坐标系，背景网格，等可以做一些函数来完成，而不需要以HACK的形式采用low level的绘图函数来完成。
+# 动画图的做法，正如它是一幅一幅静态图连起来一样，可以一帧一帧的话出来。
+# 图元是画图中的一个很重要的概念，这是由于一副图可以看作是一个一个的图元拼起来的。
+

@@ -1,0 +1,25 @@
+=LaTeX 生成pdf书签=
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  Latex中如何生成pdf的书签
+C:  2010-12-24 21:54:40
+M:  2010-12-24 21:57:20
+}}}
+
+==使用hyperef宏包生成书签==
+
+在导言区加上如下的代码
+{{{
+\usepackage[dvipdfm,
+            pdfstartview=FitH,
+            CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks=true, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            %pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            citecolor=magenta,% magenta , cyan
+            linkcolor=blue,
+            linktocpage=true,
+            ]{hyperref}       % hyperref 宏包通常要求放在导言区的最后!!!
+
+}}}

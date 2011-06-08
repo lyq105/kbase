@@ -1,0 +1,3 @@
+= The Fast Multipole Method for Boundary Element Method =
+
+The fast multipole method is one of the most important algorithm in computing developed in the 20th century. Along with the fast multipole method, the boundary element method has also emerged as a powerful method for modeling large-scale problems. BEM models with millions of unknowns on the boundary can now be solved on desktop computers using the fast multipole BEM. This is the first book on the fast mulitipole BEM, which brings together the classical theories in BEM formulations and the recent development of the fast multipole method. Two and three dimensional potential, elastostatic, Stokes flow, and acoustic wave problems are covered, supplemented with exercise problems and computer source codes,  

@@ -1,0 +1,55 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style1.css" />
+<title>memory_pool</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div id="wrapper">
+<h1 id="toc_1">内存池</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">内存池</a></li>
+<ul>
+<li><a href="#toc_1.1">默认内存管理函数的不足之处</a></li>
+<li><a href="#toc_1.2">内存池的定义</a></li>
+<li><a href="#toc_1.3">内存池实现的思想</a></li>
+<li><a href="#toc_1.4">内存池的分类</a></li>
+</ul>
+<li><a href="#toc_2">内存池的实现</a></li>
+<li><a href="#toc_3">参考资料</a></li>
+</ul>
+</div>
+
+<h2 id="toc_1.1">默认内存管理函数的不足之处</h2>
+<ol>
+<li>
+默认内存管理函数在new/delete或malloc/free在 <strong>堆</strong> 上分配和释放内存。
+</li>
+<li>
+默认内存管理函数在考虑到多线程的应用时，在每次分配和释放内存时加锁，增加了开销。
+</li>
+<li>
+默认内存管理函数对于内存的管理算法是通用的，为了应付更广泛，更复杂的工作，需要做更多的额外工作，而对于一个具体的应用程序来说，适合自身特定的内存分配释放模式的自定义内存池则可以获得更好的性能。
+</li>
+</ol>
+
+<h2 id="toc_1.2">内存池的定义</h2>
+<p>
+自定义内存池的思想通过这个"池"字表露无疑，应用程序可以通过系统的内存分配调用预先一次性申请适当大小的内存作为一个内存池，之后应用程序自己对内存的分配和释放则可以通过这个内存池来完成。只有当内存池大小需要动态扩展时，才需要再调用系统的内存分配函数，其他时间对内存的一切操作都在应用程序的掌控之中。
+<h2 id="toc_1.3">内存池实现的思想</h2>
+每个内存池（Memory Pool）维护一个内存块链表（单链表），每个内存块由一个维护该内存块信息的块头结构（Memory Block）和多个分配单元组成，块头结构Memory Block则进一步维护一个该内存块的所有自由分配单元组成的"链表"。
+<h2 id="toc_1.4">内存池的分类</h2>
+从线程安全的角度来分，内存池可以分为单线程内存池和多线程内存池。单线程内存池整个生命周期只被一个线程使用，因而不需要考虑互斥访问的问题；多线程内存池有可能被多个线程共享，因此则需要在每次分配和释放内存时加锁。相对而言，单线程内存池性能更高，而多线程内存池适用范围更广。
+</p>
+
+<p>
+从内存池可分配内存单元大小来分，可以分为固定内存池和可变内存池。所谓固定内存池是指应用程序每次从内存池中分配出来的内存单元大小事先已经确定，是固定不变的；而可变内存池则每次分配的内存单元大小可以按需变化，应用范围更广，而性能比固定内存池要低。
+<h1 id="toc_2">内存池的实现</h1>
+参考<a href="file://../localfile/memory_pool.pdf">这个文件</a>
+<h1 id="toc_3">参考资料</h1>
+<a href="http://www.ibm.com/developerworks/cn/linux/l-cn-ppp/index6.html">http://www.ibm.com/developerworks/cn/linux/l-cn-ppp/index6.html</a>
+</p>
+</div>
+</body>
+</html>

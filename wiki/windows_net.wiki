@@ -1,0 +1,37 @@
+= Windows net 命令 =
+%toc
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  windows net 命令用法
+C:  2010-12-29 13:59:43
+M:  2010-12-29 13:59:43
+}}}
+
+A large family of commands beginning with the initial string "net" are available in Windows XP Professional. They are listed here.
+The Net Services suite of commands is described in the Windows Help and Support Center. Enter "net services" to obtain a list of the services and their syntax for usage.You can also see a list of all available net commands by typing "net /?" at a command prompt. Syntax help is obtained by typing "net help {command}". For example, for help with the "net stop" command, type net help stop
+
+The list of commands and a brief description of each is given below. Some of these commands duplicate functions available in other ways, such as in the Netsh suite or the Service Controller.
+
+    * Net accounts - Updates the user accounts database and modifies password and logon requirements for all accounts.
+    * Net computer - Adds or deletes computers from a domain database
+    * Net config - displays a list of configurable services
+    * Net continue - Continues a service that has been suspended by net pause
+    * Net file - Displays the names of all open shared files on a server
+    * Net group - Adds, displays, or modifies global groups in domains
+    * Net help - Provides a list of network commands and topics for which you can get help
+    * Net helpmsg - Explains why an error occurred and provides problem-solving information
+    * Net localgroup- Adds, displays, or modifies local groups
+    * Net name - Adds or deletes a messaging name
+    * Net pause - Pauses services that are currently running.
+    * Net print - Displays information about a specified print queue, displays information about all print queues hosted by a specified print server, displays information about a specified print job, or controls a specified print job.
+    * Net send- Sends a messenger service message
+    * Net session- Lists or disconnects sessions
+    * Net share- Displays or manages shared printers or directories
+    * Net start- Lists or starts network services
+    * Net statistics- Displays workstation and server statistics
+    * Net stop- Stops services
+    * Net time- Displays or synchronizes network time
+    * Net use- Displays or manages remote connections
+    * Net user- Creates local user accounts
+    * Net view- Displays network resources or computers
+----

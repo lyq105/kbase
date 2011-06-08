@@ -1,0 +1,44 @@
+=VIM LaTex Suite 使用技巧记录=
+%toc
+
+{{{
+A:  liyiqiang(lyq105@163.com)
+P:  记录LaTeX Suite使用过程中技巧
+C:  2010-12-23 18:32:39
+M:  2010-12-23 18:33:40
+}}}
+
+== VIM加载空tex文件时默认加载LaTeX Suite ==
+VIM打开空tex文件时默认是打开plaintex文件，不能加载LaTeXsuite插件，因此需要设置下列变量。
+{{{
+let g:tex_flavor='latex'
+}}}
+== LaTeX <F5>键环境补全 ==
+{{{
+document 
+--> 
+\documentclass[<+options+>]{<+class+>}					
+\usepackage{ctex}
+
+\begin{document}
+<++>
+\end{document}
+}}}
+== LaTeX <F7>键命令补全 ==
+{{{
+frac becomes \frac{<++>}{<++>}<++>
+word --> \word{<++>}<++>
+}}}
+== GVIM 正向反向搜索 ==
+=== 正向搜索 ===
+设置变量
+{{{
+let g:Tex_CompileRule_dvi = 'latex -src-specials -interaction=nonstopmode $*'
+}}}
+使用 "\ls" 进行搜索.
+=== 反向搜索 ===
+设置yap:View > Options > Inverse Search
+{{{
+"C:\Program Files\vim\vim61\gvim" -c ":RemoteOpen +%l %f"
+}}}
+

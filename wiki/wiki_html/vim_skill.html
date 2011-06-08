@@ -1,0 +1,289 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style1.css" />
+<title>vim_skill</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div id="wrapper">
+<h1 id="toc_1">VIM 技巧</h1>
+<pre>
+
+T：记录VIM使用中的一些技巧
+C：2010-12-23 17:20:28
+M: 2010-12-29 17:48:27
+</pre>
+
+<div class="toc">
+<ul>
+<li><a href="#toc_1">VIM 技巧</a></li>
+<ul>
+<li><a href="#toc_1.1">VIM排序</a></li>
+<ul>
+<li><a href="#toc_1.1.1">对文本的第2行到10行排序</a></li>
+<li><a href="#toc_1.1.2">对一段文字进行排序</a></li>
+<li><a href="#toc_1.1.3">参考资料</a></li>
+</ul>
+<li><a href="#toc_1.2">VIM查找</a></li>
+<ul>
+<li><a href="#toc_1.2.1">简单替换表达式</a></li>
+<li><a href="#toc_1.2.2">删除多余的空格</a></li>
+<li><a href="#toc_1.2.3">匹配重复性模式</a></li>
+<li><a href="#toc_1.2.4">指定重复次数</a></li>
+<li><a href="#toc_1.2.5">多选一匹配</a></li>
+</ul>
+<li><a href="#toc_1.3">vim 列编辑</a></li>
+<li><a href="#toc_1.4">vim、gvim添加不识别的文件类型</a></li>
+<ul>
+<li><a href="#toc_1.4.1">使用命令</a></li>
+<li><a href="#toc_1.4.2">添加新的语法文件</a></li>
+<li><a href="#toc_1.4.3">vimdiff</a></li>
+</ul>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">VIM排序</h2>
+<h3 id="toc_1.1.1">对文本的第2行到10行排序</h3>
+<pre>
+:2,10!sort
+</pre>
+<h3 id="toc_1.1.2">对一段文字进行排序</h3>
+<pre>
+例如，有下面一段文字
+version.o
+pch.o
+getopt.o
+util.o
+getopt1.o
+inp.o
+patch.o
+backupfile.o
+你想要对他们进行排序，按照字母顺序
+通过以下几部可以做到：
+a:移动光标到想要排序的那一行
+b:使用ma标志改行为a
+c:移动光标到想要排序的最后一行
+d:使用指令"!'asort"，来完成排序（注意这些步骤都是在非输入模式下进行的。）
+
+下面解释一下各个的用途。"!"表示将要执行指令，
+"'a"表示从当前行到标志为a的行，'sort'是执行的指令。
+</pre>
+<h3 id="toc_1.1.3"><a href="ref_vim_sort.html">参考资料</a></h3>
+
+<h2 id="toc_1.2">VIM查找</h2>
+<h3 id="toc_1.2.1">简单替换表达式</h3>
+<p>
+替换命令可以在全文中用一个单词替换另一个单词：
+</p>
+<pre>
+:%s/four/4/g
+</pre>
+<p>
+"%" 范围前缀表示在所有行中执行替换。最后的 "g" 标记表示替换行中的所有匹配点。如果仅仅对当前行进行操作，那么只要去掉%即可
+如果你有一个象 "thirtyfour" 这样的单词，上面的命令会出错。这种情况下，这个单词会被替换成"thirty4"。要解决这个问题，用 "\&lt;" 来指定匹配单词开头：
+</p>
+<pre>
+:%s/\&lt;four/4/g
+</pre>
+<p>
+显然，这样在处理 "fourty" 的时候还是会出错。用 "\&gt;" 来解决这个问题：
+</p>
+<pre>
+:%s/\&lt;four\&gt;/4/g
+</pre>
+<p>
+如果你在编码，你可能只想替换注释中的 "four"，而保留代码中的。由于这很难指定，可以在替换命令中加一个 "c" 标记，这样，Vim 会在每次替换前提示你：
+</p>
+<pre>
+:%s/\&lt;four\&gt;/4/gc
+</pre>
+
+<h3 id="toc_1.2.2">删除多余的空格</h3>
+<p>
+要删除这些每行后面多余的空格，可以执行如下命令：
+</p>
+<pre>
+:%s/\s\+$//
+</pre>
+<p>
+命令前面指明范围是 "%"，所以这会作用于整个文件。"substitute" 命令的匹配模式是
+"\s\+$"。这表示行末（$）前的一个或者多个（\+）空格（\s）。替换命令的 "to" 部分是空的："//"。这样就会删除那些匹配的空白字符。
+</p>
+
+<h3 id="toc_1.2.3">匹配重复性模式</h3>
+<p>
+星号项 "*" 规定在它前面的项可以重复任意次。因此:
+</p>
+<pre>
+/a*
+</pre>
+<p>
+匹配 "a"，"aa"，"aaa"，等等。但也匹配 "" (空字串)，因为零次也包含在内。星号 "<strong>" 仅仅应用于那个紧邻在它前面的项。因此 "ab</strong>" 匹配 "a"，"ab"，"abb","abbb"，等等。如要多次重复整个字符串，那么该字符串必须被组成一个项。组成一项的方法就是在它前面加 "\("，后面加 "\)"。因此这个命令:
+</p>
+<pre>
+/\(ab\)*
+</pre>
+<p>
+匹配: "ab"，"abab"，"ababab"，等等。而且也匹配 ""。
+要避免匹配空字串，使用 "\+"。这表示前面一项可以被匹配一次或多次。
+</p>
+<pre>
+/ab\+
+</pre>
+<p>
+匹配 "ab"，"abb"，"abbb"，等等。它不匹配 后面没有跟随 "b" 的 "a"。
+要匹配一个可选项，用 "\="。 例如:
+</p>
+<pre>
+/folders\=
+</pre>
+<p>
+匹配 "folder" 和 "folders"。
+</p>
+
+<h3 id="toc_1.2.4">指定重复次数</h3>
+<p>
+要匹配某一项的特定次数重复，使用 "\{n,m}" 这样的形式。其中 "n" 和 "m" 都是数字。在它前面的那个项将被重复 "n" 到 "m" 次 (|inclusive| 包含 "n" 和 "m")。例如:
+</p>
+<pre>
+/ab\{3,5}
+</pre>
+<p>
+匹配 "abbb"，"abbbb" 以及 "abbbbb"。
+当 "n" 省略时，被默认为零。当 "m" 省略时，被默认为无限大。当 ",m" 省略时，就表示重复正好 "n" 次。例如:
+<table>
+<tr>
+<th>模式</th>
+<th>匹配次数</th>
+</tr>
+<tr>
+<td>\{,4}</td>
+<td>0,1,2,3或4</td>
+</tr>
+<tr>
+<td>\{3,}</td>
+<td>3,4,5,等等</td>
+</tr>
+<tr>
+<td>\{0,1}</td>
+<td>0或1，同\=</td>
+</tr>
+<tr>
+<td>\{0,}</td>
+<td>0 或更多，同*</td>
+</tr>
+<tr>
+<td>\{1,}</td>
+<td>1 或更多，同\+</td>
+</tr>
+<tr>
+<td>\{3}</td>
+<td>3</td>
+</tr>
+</table>
+</p>
+
+<h3 id="toc_1.2.5">多选一匹配</h3>
+<p>
+在一个查找模式中，"或" 运算符是 "\|"。例如:
+</p>
+<pre>
+/foo\|bar
+</pre>
+<p>
+这个命令匹配了 "foo" 或 "bar"。更多的抉择可以连在后面:
+</p>
+<pre>
+/one\|two\|three
+</pre>
+<p>
+匹配 "one"，"two" 或 "three"。
+如要匹配其多次重复，那么整个抉择结构须置于 "\(" 和 "\)" 之间:
+</p>
+<pre>
+/\(foo\|bar\)\+
+</pre>
+<p>
+这个命令匹配 "foo"，"foobar"，"foofoo"，"barfoobar"，等等。
+再举个例子:
+</p>
+<pre>
+/end\(if\|while\|for\)
+</pre>
+<p>
+这个命令匹配 "endif"，"endwhile" 和 "endfor"。
+<h2 id="toc_1.3">vim 列编辑</h2>
+进入列编辑模式的快捷键是在linux中的&lt;Ctrl-V&gt;,而Windows中是&lt;Ctrl-q&gt;.
+</p>
+
+<h2 id="toc_1.4">vim、gvim添加不识别的文件类型</h2>
+<p>
+最近在学习karrigell，里面有.ks、.pih、.hip等文件类型，用vim编辑的时候，vim不识别这些文件类型。查阅了vim文档，总结了以下几种让增加vim不识别的文件类型的方法：
+</p>
+
+
+<h3 id="toc_1.4.1">使用命令</h3>
+
+<p>
+.ks和.hip其实是python文件，.pih其实是html文件，在编辑的时候可以使用
+</p>
+<pre>
+set filetype=python
+或
+set filetype=html
+</pre>
+<p>
+来让vim调用相应的语法文件。
+</p>
+
+
+<p>
+二、修改filetype.vim文件
+</p>
+<pre>
+filetype.vim文件结构为：
+
+……
+
+augroup filetypedetect
+
+……
+
+augroup END
+</pre>
+<p>
+在augroup filetypedetect到augroup END之间为文件类型定义。
+</p>
+
+<p>
+找到au BufNewFile,BufRead *.py, *.pyw那行，将其修改为au BufNewFile,BufRead *.py, *.pyw, *.ks, *.hip
+找到au BufNewFile,BufRead *.html, *.htm, *.shtml, *.stm那一行，将其修改为au BufNewFile,BufRead *.html, *.htm, *.shtml, *.stm, *.pih
+</p>
+
+<p>
+就增加了.ks、.pih、.hip等文件类型识别了。
+</p>
+
+<p>
+至于karrigell里新增的如Include、Session等需要高亮的关键词，可以直接修改syntax文件夹里的python.vim文件，在文件里添加相应的词就行了。
+</p>
+
+<p>
+注：vim能够识别.ks文件，是作为KDE script文件，如果要当作python文件来识别，需要把au BufNewFile,BufRead *.ks那一行注释掉，上述修改才会起作用。
+</p>
+
+
+<h3 id="toc_1.4.2">添加新的语法文件</h3>
+
+<p>
+syntax文件夹里都是vim的文件类型定义文件，可以按照类似的语法文件写一个，然后在filetype.vim增加文件类型。
+</p>
+ 
+<h3 id="toc_1.4.3">vimdiff</h3>
+<p>
+<a href="http://www.ibm.com/developerworks/cn/linux/l-vimdiff/">http://www.ibm.com/developerworks/cn/linux/l-vimdiff/</a>
+</p>
+</div>
+</body>
+</html>

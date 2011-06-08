@@ -1,0 +1,156 @@
+= Git常用方法小结 =
+
+说明：该文档只对有一定的git使用基础的人有效。
+关于git如何如何好，这里就不用描述了。我将仅仅描述一些常规的用法，并在附件发一份网友翻译的git中文文档，以便作为你的git辞典，随时查阅。
+为了能够更形象地介绍git的用法，我们还是拿一个典型的例子来做描述吧。
+最近我在dev.lemote.com建立了自己的RT_PREEMPT for loongson的项目，这个项目是通过git来维护的。下面我将从项目的创建到目前项目已经有了多个分支这一过程进行详细的介绍。
+
+    == 1、创建项目仓库 ==
+在http://dev.lemote.com/code注册一个帐号，并登录申请一个项目，申请好以后你将获得一份访问该站的私钥，并获得一个项目的仓库地址：
+
+    * git://dev.lemote.com/rt4ls.git (git protocal, anonymous)
+    * http://dev.lemote.com/http_git/rt4ls.git (http protocal, if the git protocal is blocked by firewall)
+    * ssh://git@dev.lemote.com/rt4ls.git(ssh protocal, for project's owner)
+
+这三个地址分别支持不同的协议，第一个用于普通用户checkout，第二个用于在线浏览，第三个用户项目管理员checkin。
+   
+申请好项目好，我们需要把那个私钥保存到你的本地帐号家目录下的.ssh/id_rsa文件中，并修改该文件的访问权限为只有属主可读写。
+{{{
+$ vim ~/.ssh/id_rsa
+$ chmod 600 ~/.ssh/id_rsa
+}}}
+   
+    == 2、初始化项目仓库 ==
+
+上面虽然创建了仓库，但是仓库里头还没有内容，我们需要放一些东西上去。要放东西上去蛮简单，我们先在本地建立一个仓库，然后把仓库提交上去即可。
+{{{
+$ cd project                  //你的项目目录
+$ git init && git add . && git commit -a // 初始化本地仓库并添加项目
+$ git config --global user.name "Wu Zhangjin" // 初始化你的项目作者信息
+$ git config --global user.email "wuzhangjin@gmail.com" // 邮件
+$ git push ssh://git@dev.lemote.com/rt4ls.git master // 把本地仓库提交到远程仓库的master分支中
+}}}
+
+这样就初始化了远程仓库了，将在远程仓库看到一个master分支。实际上为了方便起见，上面的最后一步操作往往是这样。
+{{{
+$ git remote add origin ssh://git@dev.lemote.com/rt4ls.git
+$ git push origin master
+}}}
+   
+这两个是等价的，第一行的意思是添加一个标记，让origin指向ssh://git@dev.lemote.com/rt4ls.git，也就是说你操作origin的时候，实际上就是在操作ssh://git@dev.lemote.com/rt4ls.git。origin在这里完全可以理解为后者的别名。
+
+需要说明的是，默认情况下这条语句等价于提交本地的master仓库到远程仓库，并作为远程的master分支。
+如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，那么可以这么做。
+{{{
+$ git push origin test:master         // 提交本地test分支作为远程的master分支
+$ git push origin test:test              // 提交本地test分支作为远程的test分支
+}}}
+如果想删除远程的分支呢？类似于上面，如果:左边的分支为空，那么将删除:右边的远程的分支。
+{{{
+$ git push origin :test              // 刚提交到远程的test将被删除，但是本地还会保存的，不用担心
+}}}
+
+
+    == 3、本地和远程仓库的交互 ==
+
+上面实际上已经介绍了本地和远程的交互操作了，当然，这些交互操作还有两个需要介绍。介绍完以后我们就介绍本地操作。
+
+首先是clone一个远程仓库到本地，例如一个普通用户想把我的git仓库clone下来，可以这么做。
+{{{
+$ git clone git://dev.lemote.com/rt4ls.git
+}}}
+
+如果已经clone过我的git仓库，但是想看看我的仓库是否已经更新，如果有更新就checkout到本地。
+{{{
+$ git pull
+}}}
+
+相应地，如果你想弄到最新的内核，那么可以clone内核的git仓库，Linux内核的git仓库在这里http://git.kernel.org，比如说我们想checkout最新的内核稳定版，先从http://git.kernel.org找到对应git仓库的地址：git://git.kernel.org/pub/scm/ + linux/kernel/git/stable/linux-2.6.29.y.git
+{{{
+$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.29.y.git
+}}}
+  
+    == 4、本地操作 ==
+
+实际上除了上面的本地和远程的交互操作外，平时的工作主要是一些本地操作了。本地操作无非是一些不停的修改源代码的工作。
+如果没有问题的话，大概的工作流程是这样：
+			# 修改代码 
+			# 标记哪些代码要进入本地仓库
+			# 把标记过的代码提交到仓库中，并编写修改日志
+
+这个过程分别对应：   
+			# 用源代码编辑器编辑源代码，比如vim
+			# git add [需要提交的文件或者目录]
+			# git commit，然后编写修改日志，并退出编辑器
+
+例如，我们修改了一个三个文件file1,file2,file3，但是只想提交file2和file3，那么可以这么做。
+{{{
+$ git add file2 file3
+$ git commit
+}}}
+
+修改过程中可以通过git status查看当前状态，通过git log查看之前的commits，通过git show显示某次的commit，通过git diff查看当前还有哪些修改没有提交。
+需要注意地是，当你想删除或者重命名已经在仓库中的文件时，请使用git rm和git mv，因为它们除了基本的rm和mv操作外，还会对应地调整仓库中的记录。
+实际上，在维护某个项目时，往往不会很顺利，需要不停地更新，不停地debug，需要多个不同开发人员的协同合作，也涉及到版本之间的回退，补丁的制作和发布等。
+下面介绍几个常用的内容：
+
+   === a. 根据commits产生一序列补丁 ===
+
+例如，我们想导出历史上的某个commit之后的所有commits为一序列的补丁序列，那么可以这么做。
+
+{{{
+$ git log | grep ^commit | head -5
+commit a11c7fd5839ddac9a19edadc245522f606a9e067
+commit a718cbdc3ea9c72e05dd3beb5c58bfac91fe1a76
+commit b5345a1b077259958fa56cb7c4dea82694214247
+commit 380f57ad3157b644bb822995dcd85d73504a75d8
+commit 68a0c4b66d619f816ded5b83f5e8c526e43bdf3e
+$ git format-patch 68a0c4b66d619f816ded5b83f5e8c526e43bdf3e
+
+$ git am 68a0c4b66d619f816ded5b83f5e8c526e43bdf3e    //应用Patch
+}}}
+
+   === b. checkout出某个commit并据此创建一个分支===
+{{{
+$ git checkout -b test 68a0c4b66d619f816ded5b83f5e8c526e43bdf3e
+$ git checkout master   // 要删除某个分支，先checkout到另外一个分支，然后删除那个分支
+$ git branch -d test
+}}}
+
+   === c. 从本地机器的其他目录下pull某个分支 ===
+
+例如，我有两个不同的git仓库，分别放在两个不同的目录下，一个叫linux-mips，一个叫rt4ls，如果我的rt4ls的master想跟 linux-mips的master分支同步，并且我的linux-mips分支已经跟远程的分支同步了，那我就没有必要从远程同步，而是直接从本地的 linux-mips同步，这个怎么做呢?
+{{{
+$ cd rt4ls
+$ git checkout master
+$ git pull /path/to/linux-mips master
+}}}
+   
+    ===d. 应用另外一个分支的交付(commit)到当前分支===
+
+如果你的git仓库里头维护了很多分支，你对其中某个分支进行了某个更新，但是这个更新也最好是应用到其他分支上，那怎么办呢？一个分支改一次？没这么麻烦，我们有git cherry-pick，这个工具可以帮助我们应用某个指定的commit到当前分支。例如：
+{{{
+$ git cherry-pick 0f0b60cff094dfdb313e6a3d197e7907a7626f42
+}}}
+
+0f0b60cff094dfdb313e6a3d197e7907a7626f42是我在另外一个分支里头刚追加的一个交付。
+
+   === e. tag的用法 ===
+
+tag实际上就是一个标签，如果你发现维护到该项目的某个commit时，这个commit可以当作一个非常重要的“里程碑”，比如这里开始引入了一个非常重要的功能，那么你就可以对当前这个commit创建一个tag，这样当你继续更新你的项目以后，你就可以非常容易的通过这个tag找到当时实现的这个功能。
+
+例如，你想对当前的commmit创建一个名叫test的tag，那么可以这么做。
+{{{
+$ git tag test HEAD
+}}}   
+删除这个tag可以这么做。
+{{{
+$ git tag -d test
+}}}
+如果想把这个tag提交到远程，可以用git push --tags，如果想删除远程tag呢？可以类似删除远程分支以后，在冒号(:)右边加上tag名，左边保持为空！
+
+   === f. 如果发现某个中间的commit出现了问题，该如何测试它呢 ===
+如果你发现一个历史的commit有问题，并且后续的commit并不需要，所以可以直接回溯到那个commit，进行测试，这个貌似可以通过git bisect来实现，或者是简单的checkout出某个历史来测试。
+但是，如果你就怀疑某个历史的commit有问题，但是后面的所有commit你也需要，那么可以这么做：
+先用git diff或者是format-patch把这个commit弄出一个补丁出来，然后用patch -R把这个补丁临时撤销（如果你不commit的话）。这样就可以方便的测试某个中间的commit是否有问题了！
+----

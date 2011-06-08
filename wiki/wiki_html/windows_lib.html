@@ -1,0 +1,52 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style1.css" />
+<title>windows_lib</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div id="wrapper">
+<h2 id="toc_0.1">Windows 中的库</h2>
+
+
+<h3 id="toc_0.1.1">利用DLL文件导出Lib</h3>
+
+<p>
+Windows API DLL导出Lib文件，供VC隐式调用DLL所用。
+</p>
+
+<p>
+Visual C++ 开发工具提供了两个命令行工具，一个是dumpbin.exe,另一个是lib.exe。利用这两个工具即可从dll导出其对应的lib。
+</p>
+
+<ol>
+<li>
+在命令行执行：
+</li>
+</ol>
+<p>
+<code>dumpbin /exports yourdll.dll &gt; yourdll.def</code>
+</p>
+
+<ol>
+<li>
+编辑 yourdll.def 文件，使之格式与.def文件格式一致。比如：
+<pre>
+EXPORTS;
+       fn1;
+       fn2;
+</pre>
+</li>
+<li>
+在命令行执行：
+<pre>
+lib /def:yourdll.def /machine:i386 /out:yourdll.lib
+</pre>
+</li>
+</ol>
+<p>
+静态库
+</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+= Welcome me to my Wiki =
+
+%toc
+
+[[myviewpoint|我的哲学观点]]
+== [[doc_rule|文档书写规范]] ==
+[[TestPad]]
+== My TODO Lists ==
+		=== TODOlist===
+		[[TODO]]
+		=== 要读的书 ===	
+	  *	[[the_roadless_traveled|少有人走的路]]
+	  * [[nonlinear_numeric|非线性数值分析]]
+	  * [[presentation_zen|演讲之禅]]
+
+	  === 要做的科研 ===
+		* [[honeycomb|蜂窝材料的研究]]
+		* Stellar
+		* [[libmesh|libmesh]]
+		* [[CGALmesher|CGAL网格生成]]
+		* [[The fast multipole method for BEM|FMMBEM]]
+== Knoledge base ==
+	=== About Computer === 
+		==== 系统知识 ====
+		# [[windows_net|Windows net 命令]]
+		# [[colinux_config|colinux 配置]]	
+		# [[windows_lib|Windows中的库]]
+		
+		==== 版本控制系统 ====
+			===== Git =====
+			# [[git_begin|Git入门教程]]
+			# [[gitword|Git术语]]
+				
+		==== C++语言 ====
+					[[memory_pool|内存池]]
+		==== VIM ====
+		#	[[Vim_encoding|Vim的编码问题]]
+		# [[vim_skill|Vim技巧]]
+		# [[vim_latex_suite|VIM LaTex Suite使用技巧]]
+		# [[new_in_vim73|VIM7.3中的新特性]]
+		
+		==== LaTeX ====
+		# [[beamer_tpl|Beamer 模板]]
+		# [[latex_bookmark|Latex 书签]]
+		# [[latex_graph|Latex中的作图]]
+		
+		==== 一些链接 ====
+		# [http://www.cheat-sheets.org/ Cheat Sheets]
+		# [http://www.beiww.com/doc/oss/smart-questions.html 提问的智慧]
+
+	===	[[Mathmatics]] ===
+
+	=== [[Mechanics]] ===
+			
+	=== About Daily Life ===
+	#	[[summery20110118|2011-01-18总结]]
+	
+	=== About Arts ===
+[[Computer_famous_word|编程中的至理名言]]

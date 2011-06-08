@@ -1,0 +1,213 @@
+%\documentclass[t,c,b]{beamer}
+\documentclass[t]{beamer}
+
+%\documentclass{article}
+
+\usepackage[UTF8]{ctex}
+\hypersetup{colorlinks=true,linkcolor=red}
+%Theme
+%\usetheme{default}
+%\usetheme{Malmoe}
+%\usetheme{Boadilla}
+%\usetheme[height=7mm]{Rochester}
+%\usetheme{Copenhagen} 
+\usetheme{Warsaw} 
+%\usetheme{umbc1} 
+% 背景图片
+%\setbeamertemplate{background canvas}{\includegraphics
+%	[width=\paperwidth,height=\paperheight]{alps.jpg}}
+
+% items enclosed in square brackets are optional; explanation below
+\title[A short proof]{A short proof of Fermat's Last Theorem}
+\subtitle[Errors]{Estimation of numerical errors}
+\author[Y. Li]{Yiqiang Li}
+
+%The optional argument, UMBC (in square brackets) is the short form of the institute’s name.
+\institute[NWPU]{
+Department of Applied Mathematics \\
+Northwestern Polytechnical University, \\
+Xi'An, China 710072\\[1ex]
+\texttt{liyiqiang@mail.nwpu.edu.cn}
+}
+\date[November 2004]{November 26, 2004}
+
+
+
+\begin{document}
+
+%--- the titlepage frame -------------------------%
+\begin{frame}[plain]
+	\titlepage
+\end{frame}
+
+%--- frame 1-------------------------%
+\begin{frame}{一个例子}
+	\[
+	\int_{-\infty}^\infty e^{-x^2} \, dx =\sqrt{\pi}
+	\]	
+
+\end{frame}
+
+%--- frame 2 -------------------------%
+\begin{frame}{Graphics} 
+
+	Here we include three images, one each of PDF, PNG, and JPG types. 
+
+	\begin{center} 
+		%\includegraphics[width=0.3\textwidth]{image1.pdf} 
+		%\includegraphics[width=0.3\textwidth]{image2.png} 
+		%\includegraphics[width=0.3\textwidth]{image3.jpg} 
+		\end{center} 
+
+	\end{frame} 
+
+	\begin{frame}{Outline of the talk (about overlay 1)} 
+
+		\begin{itemize} 
+			\item Introduction 
+				\pause 
+			\item Statement of the main theorem 
+				\pause 
+			\item Technical lemmata 
+				\pause 
+			\item Proof of the main theorem 
+				\pause 
+			\item Conclusions 
+		\end{itemize} 
+
+	\end{frame} 
+
+	\begin{frame}{Fermat's Last Theorem (About overlay 2)} 
+
+		In this talk I will give a very elementary proof of the 
+		theorem.  I am surprised that no one else has thought of 
+		this before. 
+		\medskip 
+
+		\pause 
+
+		Fermat's Last Theorem says that the equation 
+		\[ 
+		x^2 + y^2 = z^2 
+		\] 
+		has no solution in the set of natural numbers. 
+		\medskip 
+
+		\pause 
+
+		This is not true.  After a lengthy calculation on the 
+		department's Linux machines, I have verified that within 
+		the numerical accuracy of the Pentium-4 processor, we have: 
+		\[ 
+		5000^2 + 12000^2 = 13000^2 
+		\] 
+
+	\end{frame} 
+	%--- frame --------------------------------------------------%
+	\begin{frame}[label=intro]{Introduction 链接 1}
+
+		This slide is labeled ``intro''.
+
+	\end{frame}
+
+	%--- frame --------------------------------------------------%
+	\begin{frame}{链接 }
+
+		If you click \hyperlink{intro}{here}, you will jump to the slide
+		labeled ``intro''.
+
+		\bigskip
+
+		Clicking \hyperlink{intro}{\beamerbutton{here}} will also
+		take you to the ``intro'' slide.
+		\beamerbutton{here} 
+		\beamergotobutton{here} 
+		\beamerskipbutton{here} 
+		\beamerreturnbutton{here} 
+	\end{frame}
+
+	\begin{frame}{Theorems and such}
+		\begin{definition}
+			A triangle that has a right angle is called
+			a \emph{right triangle}.
+		\end{definition}
+		\begin{theorem}
+			In a right triangle, the square of hypotenuse equals
+			the sum of squares of two other sides.
+		\end{theorem}
+
+		\begin{proof}
+			We leave the proof as an exercise to our astute reader.
+			We also suggest that the reader generalize the proof to
+			non-Euclidean geometries.
+		\end{proof}
+	\end{frame}
+
+	\begin{frame}{Splitting a slide into columns}
+
+		The line you are reading goes all the way across the slide.
+		From the left margin to the right margin.  Now we are going
+		the split the slide into two columns.
+		\bigskip
+
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				Here is the first column.  We put an itemized list in it.
+				\begin{itemize}
+					\item This is an item
+					\item This is another item
+					\item Yet another item
+				\end{itemize}
+			\end{column}
+
+			\begin{column}{0.3\textwidth}
+				Here is the second column.  We will put a picture in it.
+				%    \centerline{\includegraphics[width=0.7\textwidth]{image2.png}}
+				\end{column}
+			\end{columns}
+			\bigskip
+
+			The line you are reading goes all the way across the slide.
+			From the left margin to the right margin.
+
+		\end{frame}
+
+		\begin{frame}{对齐Splitting a slide into columns}
+
+			The line you are reading goes all the way across the slide.
+			From the left margin to the right margin.  Now we are going
+			the split the slide into two columns.
+			\bigskip
+			%--------------***-----------
+			\begin{columns}[T]
+				\begin{column}{0.5\textwidth}
+					Here is the first column.  We put an itemized list in it.
+					\begin{itemize}
+						\item This is an item
+						\item This is another item
+						\item Yet another item
+					\end{itemize}
+				\end{column}
+
+				\begin{column}{0.3\textwidth}
+					Here is the second column.  We will put a picture in it.
+					% \centerline{\includegraphics[width=0.7\textwidth]{image2.png}}
+					\end{column}
+				\end{columns}
+			\end{frame}
+
+			\begin{frame}[b]{Bottom alignment} 
+
+				This is the contents of the slide. 
+
+			\end{frame} 
+			\begin{frame}[c]{Center alignment (default)} % [c] is the default 
+
+				This is the contents of the slide. 
+
+			\end{frame} 
+
+
+
+			\end{document}
+

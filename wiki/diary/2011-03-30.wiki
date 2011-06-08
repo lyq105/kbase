@@ -1,0 +1,11 @@
+Today's Task
+
+1. Finish the first numerical example of boundary element method. (An annulus example)
+2. Find out how to expand the kernel function of surface radiative heat transfer equation.
+
+
+Today's Work
+
+# find out how to get the basic solution of anisotropy heat conductive equation.
+# rewrite the code for boundary element method.  
+

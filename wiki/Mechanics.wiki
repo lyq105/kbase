@@ -1,0 +1,10 @@
+== Topics in thin plate theory==
+
+* [[Classification of Thin plates]]
+* [[Membranes force]]
+* [[Kirchhoff's plate theory]]. 
+
+== Basic elasticity theory ==
+
+* [[Elasticity equations]]
+ 

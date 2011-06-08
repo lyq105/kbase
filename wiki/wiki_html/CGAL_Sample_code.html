@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>F:\LiYiQiang\nihao.cc.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="cpp">
+<meta name="settings" content="use_css,number_lines">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #000000; background-color: #e5e5e5; }
+body { font-family: monospace; color: #000000; background-color: #e5e5e5; }
+.lnr { color: #804040; }
+.Special { color: #6a5acd; background-color: #f2f2f2; }
+.Statement { color: #804040; font-weight: bold; }
+.Comment { color: #0000ff; }
+.Type { color: #2e8b57; font-weight: bold; }
+.Constant { color: #ff00ff; background-color: #f2f2f2; }
+.PreProc { color: #a020f0; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="lnr">  1 </span><span class="PreProc">#include </span><span class="Constant">&lt;CGAL/Exact_predicates_inexact_constructions_kernel.h&gt;</span>
+<span class="lnr">  2 </span><span class="PreProc">#include </span><span class="Constant">&lt;CGAL/Constrained_Delaunay_triangulation_2.h&gt;</span>
+<span class="lnr">  3 </span><span class="PreProc">#include </span><span class="Constant">&lt;CGAL/Delaunay_mesher_2.h&gt;</span>
+<span class="lnr">  4 </span><span class="PreProc">#include </span><span class="Constant">&lt;CGAL/Delaunay_mesh_face_base_2.h&gt;</span>
+<span class="lnr">  5 </span><span class="PreProc">#include </span><span class="Constant">&lt;CGAL/Delaunay_mesh_size_criteria_2.h&gt;</span>
+<span class="lnr">  6 </span><span class="PreProc">#include </span><span class="Constant">&lt;iostream&gt;</span>
+<span class="lnr">  7 </span><span class="Type">typedef</span> CGAL::Exact_predicates_inexact_constructions_kernel K;
+<span class="lnr">  8 </span><span class="Type">typedef</span> CGAL::Triangulation_vertex_base_2&lt;K&gt; Vb;
+<span class="lnr">  9 </span><span class="Type">typedef</span> CGAL::Delaunay_mesh_face_base_2&lt;K&gt; Fb;
+<span class="lnr"> 10 </span><span class="Type">typedef</span> CGAL::Triangulation_data_structure_2&lt;Vb, Fb&gt; Tds;
+<span class="lnr"> 11 </span><span class="Type">typedef</span> CGAL::Constrained_Delaunay_triangulation_2&lt;K, Tds&gt; CDT;
+<span class="lnr"> 12 </span><span class="Type">typedef</span> CGAL::Delaunay_mesh_size_criteria_2&lt;CDT&gt; Criteria;
+<span class="lnr"> 13 </span><span class="Type">typedef</span> CDT::Vertex_handle Vertex_handle;
+<span class="lnr"> 14 </span><span class="Type">typedef</span> CDT::Point Point;
+<span class="lnr"> 15 </span>
+<span class="lnr"> 16 </span>
+<span class="lnr"> 17 </span>
+<span class="lnr"> 18 </span><span class="Type">template</span>&lt;<span class="Type">typename</span> T&gt;
+<span class="lnr"> 19 </span><span class="Type">void</span>
+<span class="lnr"> 20 </span>output(T cdt,<span class="Type">char</span>* filename)
+<span class="lnr"> 21 </span>{
+<span class="lnr"> 22 </span>  std::ofstream fout(filename);
+<span class="lnr"> 23 </span>
+<span class="lnr"> 24 </span>  <span class="Comment">//  std::cout&lt;&lt;cdt.number_of_vertices()&lt;&lt;&quot; &quot;</span>
+<span class="lnr"> 25 </span>  <span class="Comment">//    &lt;&lt;cdt.number_of_faces()</span>
+<span class="lnr"> 26 </span>  <span class="Comment">//    &lt;&lt;std::endl</span>
+<span class="lnr"> 27 </span>  <span class="Comment">//    &lt;&lt;std::endl;</span>
+<span class="lnr"> 28 </span>
+<span class="lnr"> 29 </span>  T::Finite_vertices_iterator fvi(cdt.finite_vertices_begin());
+<span class="lnr"> 30 </span>  T::Finite_faces_iterator ffi(cdt.finite_faces_begin());
+<span class="lnr"> 31 </span>  std::map&lt;Vertex_handle,<span class="Type">int</span>&gt; V;
+<span class="lnr"> 32 </span>  <span class="Type">int</span> mesh_faces_counter = <span class="Constant">0</span>;
+<span class="lnr"> 33 </span>  <span class="Statement">for</span>(CDT::Finite_faces_iterator fit = cdt.finite_faces_begin();
+<span class="lnr"> 34 </span>    fit != cdt.finite_faces_end(); ++fit)
+<span class="lnr"> 35 </span>  {
+<span class="lnr"> 36 </span>    <span class="Statement">if</span>(fit-&gt;is_in_domain()) ++mesh_faces_counter;
+<span class="lnr"> 37 </span>  }
+<span class="lnr"> 38 </span>
+<span class="lnr"> 39 </span>  fout&lt;&lt;<span class="Constant">&quot;ZONE&quot;</span>
+<span class="lnr"> 40 </span>    &lt;&lt;<span class="Constant">&quot; NODES=&quot;</span>&lt;&lt;cdt.number_of_vertices()
+<span class="lnr"> 41 </span>    &lt;&lt;<span class="Constant">&quot;, ELEMENTS=&quot;</span>&lt;&lt;mesh_faces_counter
+<span class="lnr"> 42 </span>    &lt;&lt;<span class="Constant">&quot;, DATAPACKING=POINT, ZONETYPE=FETRIANGLE</span><span class="Special">\n</span><span class="Constant">&quot;</span>;
+<span class="lnr"> 43 </span>
+<span class="lnr"> 44 </span>  <span class="Type">int</span> nnum=<span class="Constant">1</span>;
+<span class="lnr"> 45 </span>  <span class="Statement">for</span> (fvi=cdt.finite_vertices_begin();fvi!=cdt.finite_vertices_end();fvi++)
+<span class="lnr"> 46 </span>  {
+<span class="lnr"> 47 </span>    V[fvi]=nnum++;
+<span class="lnr"> 48 </span>    <span class="Comment">//    std::cout&lt;&lt;*fvi&lt;&lt;std::endl;</span>
+<span class="lnr"> 49 </span>    fout&lt;&lt;*fvi&lt;&lt;std::endl;
+<span class="lnr"> 50 </span>
+<span class="lnr"> 51 </span>  }
+<span class="lnr"> 52 </span>  <span class="Statement">for</span>(ffi=cdt.finite_faces_begin();ffi!=cdt.finite_faces_end();ffi++)
+<span class="lnr"> 53 </span>  {
+<span class="lnr"> 54 </span>    <span class="Statement">if</span>(ffi-&gt;is_in_domain())
+<span class="lnr"> 55 </span>    {
+<span class="lnr"> 56 </span>      <span class="Statement">for</span>(<span class="Type">int</span> j = <span class="Constant">0</span>; j &lt; <span class="Constant">3</span> ; ++j)
+<span class="lnr"> 57 </span>      {
+<span class="lnr"> 58 </span>        <span class="Comment">//      std::cout&lt;&lt; V[ffi-&gt;vertex(j)]&lt;&lt;&quot; &quot;;</span>
+<span class="lnr"> 59 </span>        fout&lt;&lt; V[ffi-&gt;vertex(j)]&lt;&lt;<span class="Constant">&quot; &quot;</span>;
+<span class="lnr"> 60 </span>      }
+<span class="lnr"> 61 </span>    }
+<span class="lnr"> 62 </span>    <span class="Comment">//    std::cout &lt;&lt; std::endl;</span>
+<span class="lnr"> 63 </span>    fout &lt;&lt; std::endl;
+<span class="lnr"> 64 </span>  }
+<span class="lnr"> 65 </span>  fout.close();
+<span class="lnr"> 66 </span>}
+<span class="lnr"> 67 </span>
+<span class="lnr"> 68 </span><span class="Type">int</span> main()
+<span class="lnr"> 69 </span>{
+<span class="lnr"> 70 </span>  CDT cdt;
+<span class="lnr"> 71 </span>  Vertex_handle va = cdt.insert(Point(<span class="Constant">2</span>,<span class="Constant">0</span>));
+<span class="lnr"> 72 </span>  Vertex_handle vb = cdt.insert(Point(<span class="Constant">0</span>,<span class="Constant">2</span>));
+<span class="lnr"> 73 </span>  Vertex_handle vc = cdt.insert(Point(-<span class="Constant">2</span>,<span class="Constant">0</span>));
+<span class="lnr"> 74 </span>  Vertex_handle vd = cdt.insert(Point(<span class="Constant">0</span>,-<span class="Constant">2</span>));
+<span class="lnr"> 75 </span>  cdt.insert_constraint(va, vb);
+<span class="lnr"> 76 </span>  cdt.insert_constraint(vb, vc);
+<span class="lnr"> 77 </span>  cdt.insert_constraint(vc, vd);
+<span class="lnr"> 78 </span>  cdt.insert_constraint(vd, va);
+<span class="lnr"> 79 </span>  va = cdt.insert(Point(<span class="Constant">3</span>,<span class="Constant">3</span>));
+<span class="lnr"> 80 </span>  vb = cdt.insert(Point(-<span class="Constant">3</span>,<span class="Constant">3</span>));
+<span class="lnr"> 81 </span>  vc = cdt.insert(Point(-<span class="Constant">3</span>,-<span class="Constant">3</span>));
+<span class="lnr"> 82 </span>  vd = cdt.insert(Point(<span class="Constant">3</span>,-<span class="Constant">3</span>));
+<span class="lnr"> 83 </span>  cdt.insert_constraint(va, vb);
+<span class="lnr"> 84 </span>  cdt.insert_constraint(vb, vc);
+<span class="lnr"> 85 </span>  cdt.insert_constraint(vc, vd);
+<span class="lnr"> 86 </span>  cdt.insert_constraint(vd, va);
+<span class="lnr"> 87 </span>  std::list&lt;Point&gt; list_of_seeds;
+<span class="lnr"> 88 </span>  list_of_seeds.push_back(Point(<span class="Constant">0</span>, <span class="Constant">0</span>));
+<span class="lnr"> 89 </span>
+<span class="lnr"> 90 </span>  std::cout &lt;&lt; <span class="Constant">&quot;Number of vertices: &quot;</span> &lt;&lt; cdt.number_of_vertices() &lt;&lt;
+<span class="lnr"> 91 </span>    std::endl;
+<span class="lnr"> 92 </span>  std::cout &lt;&lt; <span class="Constant">&quot;Meshing the domain...&quot;</span> &lt;&lt; std::endl;
+<span class="lnr"> 93 </span>  CGAL::refine_Delaunay_mesh_2(cdt, list_of_seeds.begin(),
+<span class="lnr"> 94 </span>    list_of_seeds.end(),
+<span class="lnr"> 95 </span>    Criteria(<span class="Constant">0.125</span>,<span class="Constant">0.5</span>));
+<span class="lnr"> 96 </span>  std::cout &lt;&lt; <span class="Constant">&quot;Number of vertices: &quot;</span> &lt;&lt; cdt.number_of_vertices() &lt;&lt;
+<span class="lnr"> 97 </span>    std::endl;
+<span class="lnr"> 98 </span>  std::cout &lt;&lt; <span class="Constant">&quot;Number of finite faces: &quot;</span> &lt;&lt; cdt.number_of_faces() &lt;&lt;
+<span class="lnr"> 99 </span>    std::endl;
+<span class="lnr">100 </span>  <span class="Type">int</span> mesh_faces_counter = <span class="Constant">0</span>;
+<span class="lnr">101 </span>  <span class="Statement">for</span>(CDT::Finite_faces_iterator fit = cdt.finite_faces_begin();
+<span class="lnr">102 </span>    fit != cdt.finite_faces_end(); ++fit)
+<span class="lnr">103 </span>  {
+<span class="lnr">104 </span>    <span class="Statement">if</span>(fit-&gt;is_in_domain()) ++mesh_faces_counter;
+<span class="lnr">105 </span>  }
+<span class="lnr">106 </span>  std::cout &lt;&lt; <span class="Constant">&quot;Number of faces in the mesh domain: &quot;</span> &lt;&lt;
+<span class="lnr">107 </span>    mesh_faces_counter &lt;&lt; std::endl;
+<span class="lnr">108 </span>  output(cdt,<span class="Constant">&quot;f:</span><span class="Special">\\</span><span class="Constant">123.plt&quot;</span>);
+<span class="lnr">109 </span>}
+<span class="lnr">110 </span>
+</pre>
+</body>
+</html>

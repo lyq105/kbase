@@ -1,0 +1,367 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" />
+<head>
+
+<title>American Mathematical Society</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ICBM" content="41.836808, -71.412672" />
+<meta name="DC.title" content="American Mathematical Society" />
+
+<script src="/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
+<script>if (top.location != location) { top.location.href = location.href; }</script>
+<script type="text/javascript">
+function toggleMenu(objID) {
+if (!document.getElementById) return;
+var ob = document.getElementById(objID).style;
+ob.display = (ob.display == 'block')?'none': 'block';
+}
+</script>
+<link rel="alternate" type="application/rss+xml" title="JMM 2011" href="http://www.ams.org/blog/jmm2011/feed/" />
+<link rel="alternate" type="application/rss+xml" title="JMM 2010" href="http://www.ams.org/blog/jmm2010/?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="JMM 2009" href="http://www.ams.org/blog/jmm2009/?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="JMM 2008" href="http://www.ams.org/blog/jmm2008/?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="AMS News" href="http://www.ams.org/cgi-bin/content/news_items.cgi?rss=1" />
+<link rel="alternate" type="application/rss+xml" title="AMS Events" href="http://www.ams.org/cgi-bin/content/events_items.cgi?rss=1">
+
+<link rel="stylesheet" type="text/css" href="/css/SpryMenuBarHorizontal.css"  />
+<link rel="stylesheet" type="text/css" href="/css/aFinalCss.css" />
+<link rel="stylesheet" type="text/css" href="/css/aFinalPrintCss.css" media="print" />
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2791151-1']);
+  _gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+
+
+
+</head>
+<body>
+<input type="hidden" id="ams_class_id" value="">
+<h1 id="printHeader">American Mathematical Society</h1>
+<table width="1000" border="0" align="center" cellpadding="0" cellspacing="10" id="outerBlueTable">
+  <tr>
+    <td>
+      <table width="960" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="297" rowspan="2" align="right">
+            <a href="/"><img src="/images/homepageimages/amsLogoTeal.gif" alt="American Mathematical Society" name="amsLogo" width="297" height="74" border="0" id="amsLogo" /></a>
+             </td>
+          <td align="right">
+            <div id="popLinks">
+	<a href="/mathscinet/">MathSciNet &#0174;</a> |
+	<a href="/cml/">CML</a> |
+	<a href="/bookstore/">Bookstore</a> |
+	<a href="/publications/journals/">Journals</a> |
+	<a href="/profession/employment-services/employment-services">Employment Services</a> | 
+    <a href="/about-us/support-ams/forms/forms">Give to the AMS</a></div>
+
+          </td>
+        </tr>
+        <tr>
+          <td align="right" valign="middle">
+            <span id="commerce"><a href="/ams-web-account">Login</a> &middot; 
+<a href="/about-us/contact/customers/custserv ">Customer Services</a> &middot; 
+<a href="/amsshop/func%5ERevOrd,">My Cart</a> &middot; 
+<a href="/help-faq">FAQ</a>
+</span> &nbsp;<form action="/sitesearch" id="searchbox_006070101833274801941:cyhu7o79tee" class="searchBox">
+<input type="hidden" name="cx" value="006070101833274801941:cyhu7o79tee" />
+<input type="hidden" name="cof" value="FORID:11" />
+<input   name="q" type="text" alt="search the ams website"  
+size="20" maxlength="25" id="searchInput">
+<input type="submit" name="sa" value="Go" id="searchButton"  />
+</form>
+<!--<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_006070101833274801941%3Acyhu7o79tee"></script>-->
+<script type="text/javascript" src="/siteSearch/siteSearch.js"></script>
+
+
+
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+	  <table width="950" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td id="navTableRow">
+            
+
+<ul class="MenuBarHorizontal" id="nav">
+              </ul>
+          </td>
+        </tr>
+      </table>	
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+	  <table width="950" border="0" align="center" cellpadding="0" cellspacing="10" bgcolor="#FFFFFF">
+        <tr>
+          <td width="150" align="left" valign="top"> 
+	        <div id="leftColumn">
+	          <div id="secondaryNav">
+<h2 id="contextualNavHeader"><a href=""> </a></h2>
+		
+		
+		
+</div>	
+
+
+	          <div id="personaBox">
+<div id="personaNavHeader">Information for</div>
+<div class="personas"> 
+<a href="/publications/authors/authors" onclick="_gaq.push(['_trackEvent','Persona', 'Authors']);">Authors</a>
+<a href="/profession/faculty" onclick="_gaq.push(['_trackEvent','Persona', 'Faculty']);">Faculty</a>
+<a href="/publications/librarian" onclick="_gaq.push(['_trackEvent','Persona', 'Librarian']);">Librarians</a>
+<a href="/news/media-info/info-for-journalists" onclick="_gaq.push(['_trackEvent','Persona', 'Media']);">Media</a>
+<a href="/publications/math-reviews/math-reviews" onclick="_gaq.push(['_trackEvent','Persona', 'MR Community']);">MR Community</a>
+<a href="/profession/research" onclick="_gaq.push(['_trackEvent', 'Persona', 'Researchers']);">Researchers</a>
+<a href="/profession/student" onclick="gaq.push(['_trackEvent','Persona', 'Students']);">Students</a>
+</div>
+</div>
+
+	          <div id="personaBox">
+<div id="personaNavHeader">Member Journals</div>	 
+<div class="personas">	
+<a href="/jourcgi/jrnl_toolbar_nav/bull_latest">Bulletin</a>
+<a href="/notices">Notices</a>
+
+</div>
+</div>
+<br />
+	          	
+	        </div>
+	      </td>
+          <td width="620" align="left" valign="top">
+	        <div id="centerCell">
+	          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left">            <div id="breadcrumb"><strong>You are here:</strong> 
+				<a href="/">Home</a>
+							</div>
+</td>
+                  <td width="200" align="right"><div id="shareThis">
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_email"></a>
+<a class="addthis_button_favorites"></a>
+<a class="addthis_button_print"></a>
+<span class="addthis_separator">|</span>
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=txmtxm" class="addthis_button_expanded"></a>
+</div>
+<script type="text/javascript">
+   document.write(unescape("%3Cscript src='" + document.location.protocol + "//s7.addthis.com/js/250/addthis_widget.js#username=txmtxm' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+   var addthis_config = {
+      data_ga_tracker: pageTracker
+   };
+</script>
+
+<script type="text/javascript">
+   document.write(unescape("%3Cscript src='" + document.location.protocol + "//s7.addthis.com/js/250/addthis_widget.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- AddThis Button END -->
+</div>
+</td>
+                </tr>
+              </table>
+              <div>
+				<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<title>MathSciNet is temporarily unavailable</title>
+</head>
+<body bgcolor="#FFFFFF" link="#004080">
+<!--Begin Revamp 2000 logo, contact and subscription table -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0"
+summary="AMS Logo" height="64">
+  <tr> 
+    <td valign="top" width="100%"
+    background="/images/homepage/banner-revamp-2000-filler.gif" height="61"
+    bgcolor="#C7C78D"><a href="/"><img border="0"
+      src="/images/homepage/banner-revamp-2000.gif"
+      alt="American Mathematical Society" width="486" height="55"></a></td>
+    <td valign="top" align="right" width="111"
+    background="/images/homepage/banner-revamp-2000-filler.gif" height="61"
+    bgcolor="#C7C78D">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="100%" bgcolor="#84101D" colspan="2" height="3"
+    align="left"><img border="0" src="/images/clear1px.gif" width="1"
+      height="1" alt="spacer"></td>
+  </tr>
+</table>
+<!--End Revamp 2000 logo -->
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size=+1><b>MathSciNet</b></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> 
+  is temporarily unavailable. We are sorry for the inconvenience.</font> 
+  <!--End Revamp 2000 favorites, navigation and title table -->
+</p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">If you are trying 
+  to access MathSciNet, please select an alternate site from the list below.</font></p>
+<table bgcolor="#E6E6CF" width="380" align="center" cellspacing="0" border="1"
+cellpadding="3">
+  <tr> 
+    <td align="center"> <font face="Verdana, Arial, Helvetica, sans-serif" size=+1><b>MathSciNet 
+      Mirror Sites</b></font></td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#FFFFFF"><a href="http://ams.rice.edu/mathscinet"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Houston, 
+      TX USA</font></a></td>
+  </tr>
+  <tr> 
+    <td align="center"><a href="http://ams.impa.br/mathscinet"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Rio 
+      de Janeiro, Brazil</font></a></td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#FFFFFF"><a href="http://ams.mathematik.uni-bielefeld.de/mathscinet"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Bielefeld, 
+      Germany</font></a></td>
+  </tr>
+  <tr> 
+    <td align="center"><a href="http://klymene.mpim-bonn.mpg.de/mathscinet"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Bonn, 
+      Germany</font></a></td>
+  </tr>
+  <tr> 
+    <td align="center" bgcolor="#FFFFFF"><a href="http://ams.u-strasbg.fr/mathscinet"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Strasbourg, 
+      France</font></a></td>
+  </tr>
+</table>
+
+<p>Other notable services affected: <b>Editorial Board Committee Bulletin Board</b>
+
+<hr noshade size="1" color="#800000">
+<p align="center"><img border="0"
+      src="/images/ams-logo-sm.gif"
+      alt="AMS" width="40" height="31"> 
+  <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Comments: <a href="mailto:webmaster@ams.org?subject=website not available">webmaster@ams.org</a><br>
+  © Copyright 2004, American Mathematical Society 
+  </font> </p>
+</body>
+</html>
+
+			  </div> 
+            </td>
+            <td width="150" align="left" valign="top"> 
+	          <div id="rightColumn">
+	            
+
+	            		<script src="/js/ajax.js" type="text/javascript"></script>
+		<script src="/content/js/news_calendar.js" type="text/javascript"></script>
+		<div id="ams_news_calendar"></div>
+
+	          </div>
+	        </td>
+          </tr>
+        </table>
+	  </td>
+    </tr>
+
+</table>
+</td>
+</tr>
+</table>
+<br />
+
+<table width="800" border="0" align="center" cellpadding="0" cellspacing="0" id="footer">
+  <tr>
+    <td width="250" align="left" valign="top"><p>Comments: <a href="/cgi-bin/fmail/fmail.cgi?emailto=52616e646f6d4956d39de4e6d2aad1a38f8cb94dbc4da0693e459c60ec3a73f018ea44432c107e51&name=AMS Webmaster">Email Webmaster</a></p></td>
+    <td width="300" align="center" valign="top"><p>
+    &copy; <a href="/ams/copyright">Copyright</a> 
+      <script>
+	    var now = new Date();
+	    document.write(now.getFullYear());
+	  </script>, American Mathematical Society 
+      <br />
+      <a href="/about-us/contact/reach">Contact Us</a> &middot;
+      
+	  <a href="/sitemap">Sitemap</a> &middot; <a href="/ams/privacy">Privacy Statement</a>
+      
+      </p> 
+    </td>
+    <td width="250" align="right" valign="top">
+      <!-- Begin Google Translate -->
+<div id="google_translate_element" class="translateBox"></div>
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en'
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript">
+     document.write(unescape("%3Cscript src='" + document.location.protocol + "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- End Google Translate -->
+
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center" valign="top">
+    <a href="/about-us/social">
+    <img src="/images/chicklets-Ams.gif" alt="AMS Social Media" width="34" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="http://www.linkedin.com/companies/american-mathematical-society?trk=fc_badge" target="_blank">
+    <img src="/images/chicklets-LinkedIn.gif" width="32" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="http://www.facebook.com/pages/American-Mathematical-Society/216331555216" target="_blank">
+    <img src="/images/chicklets-Facebook.gif" width="33" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="http://itunes.apple.com/us/podcast/mathematical-moments-from/id269308392" target="_blank">
+    <img src="/images/chicklets-iTunes.gif" width="32" height="40" border="0" class="chicklets" /></a>
+    
+	<a href="http://www.twitter.com/amermathsoc" target="_blank">
+    <img src="/images/chicklets-Twitter.gif" width="34" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="http://www.youtube.com/amermathsoc" target="_blank">
+    <img src="/images/chicklets-YouTube.gif" width="33" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="/about-us/rss">
+    <img src="/images/chicklets-Rss.gif" width="33" height="40" border="0" class="chicklets" /></a>
+    
+    <a href="/about-us/blogs">
+    <img src="/images/chickletsBlog.gif" alt="" width="32" height="39" border="0" class="chicklets" /></a>
+    
+    <a href="http://www.wikipedia.org/wiki/American_Mathematical_Society" target="_blank">
+    <img src="/images/chicklets-Wikipedia.gif" alt="" width="32" height="39" border="0" class="chicklets" /></a>
+    </td>
+  </tr>
+</table>
+<br />
+<script type="text/javascript">
+var MenuBar1 = new Spry.Widget.MenuBar("nav");
+</script>
+
+<!--script type="text/javascript">
+	$(document).ready(function() {
+		$('#coin-slider').coinslider({ width: 600, navigation: true, delay: 5000, effect: 'random'});
+	});
+</script-->
+</body>
+</html>
+
+

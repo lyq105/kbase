@@ -1,0 +1,16 @@
+== git 入门教程 ==
+	
+=== 1.从Git仓库中获取项目 ===
+	使用git clone命令 克隆整个库。
+=== 2.从Git仓库中创建分支 ===
+	git branch	
+=== 3.提交文件到Git仓库中 ===
+	git commit
+	git add
+=== 4.查看提交的文件的区别 ===
+	git diff
+=== 5.参考文章===
+	[[Git常用方法小结]]
+
+Created @ 2010-12-23 15:50:54
+last modified @ 2010-12-19

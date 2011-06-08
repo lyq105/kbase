@@ -1,0 +1,26 @@
+==Windows 中的库==
+
+
+===利用DLL文件导出Lib===
+
+Windows API DLL导出Lib文件，供VC隐式调用DLL所用。
+
+Visual C++ 开发工具提供了两个命令行工具，一个是dumpbin.exe,另一个是lib.exe。利用这两个工具即可从dll导出其对应的lib。
+
+# 在命令行执行：
+{{{dumpbin /exports yourdll.dll > yourdll.def}}}
+
+# 编辑 yourdll.def 文件，使之格式与.def文件格式一致。比如：
+{{{
+EXPORTS;
+       fn1;
+       fn2;
+}}}
+# 在命令行执行：
+{{{
+lib /def:yourdll.def /machine:i386 /out:yourdll.lib
+}}}
+静态库
+
+
+
